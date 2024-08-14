@@ -1,7 +1,6 @@
 # astronomer-docs-resources
 
-
-Repository that hosts code examples, configuration examples, and metrics dashboards for you to download and work with using the [Astronomer.io Docs](https://www.astronomer.io/docs/)
+Repository that hosts code examples, configuration examples, and metrics dashboards for you to download and work with using guides and procedures in the [Astronomer.io Docs](https://www.astronomer.io/docs/).
 
 This repository includes the following:
 
