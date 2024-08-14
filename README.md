@@ -10,6 +10,6 @@ This repository includes the following:
 
 ## Software Resources
 
-- Software Default Config - These files show an example of all defaults used by Astronomer Software
+- Software Default Config - These files show an example of all defaults you can use when working with Astronomer Software
 - [Documentation Archive](https://www.astronomer.io/docs/software/documentation-archive)
 
