@@ -1,9 +1,9 @@
-*.md @lzdanski
+*.md @lzdanski @yanmastin-astro
 
-/astro/ @TJaniF @kentdanas @lzdanski @merobi-hub
+/astro/  @lzdanski @yanmastin-astro
 
-/software/ @TJaniF @kentdanas @lzdanski @merobi-hub
+/software/ @lzdanski @yanmastin-astro
 
-/learn/ @TJaniF @kentdanas @lzdanski @merobi-hub
+/learn/ @TJaniF @kentdanas @lzdanski @merobi-hub @yanmastin-astro
 
 /code-samples/dags/ @TJaniF @kentdanas @merobi-hub
