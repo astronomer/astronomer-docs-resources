@@ -346,15 +346,15 @@
             },
             "editorMode": "code",
             "exemplar": false,
-            "expr": "sum(max by (namespace, container) (kube_pod_status_ready{ namespace=\"$deployment\", pod=~\".*webserver.*\"})) == bool 1 or on () vector(0)",
+            "expr": "sum(max by (namespace, container) (kube_pod_status_ready{ namespace=\"$deployment\", pod=~\".*apiserver.*\"})) == bool 1 or on () vector(0)",
             "hide": false,
             "interval": "",
-            "legendFormat": "Webserver",
+            "legendFormat": "API Server",
             "range": true,
-            "refId": "Webserver"
+            "refId": "API Server"
           }
         ],
-        "title": "Webserver Health",
+        "title": "API Server Health",
         "type": "stat"
       },
       {
@@ -2458,7 +2458,7 @@
         },
         "id": 235,
         "panels": [],
-        "title": "Webserver",
+        "title": "API Server",
         "type": "row"
       },
       {
@@ -2516,13 +2516,13 @@
               "uid": "${DS_GRAFANACLOUD-PROM}"
             },
             "exemplar": false,
-            "expr": "count (container_memory_working_set_bytes{namespace=\"$deployment\", container=\"webserver\"}) or on ()vector(0)",
+            "expr": "count (container_memory_working_set_bytes{namespace=\"$deployment\", container=\"apiserver\"}) or on ()vector(0)",
             "interval": "",
             "legendFormat": "Schedulers",
             "refId": "Scheduler"
           }
         ],
-        "title": "Webserver",
+        "title": "API Server",
         "type": "stat"
       },
       {
@@ -2614,7 +2614,7 @@
             },
             "editorMode": "code",
             "exemplar": false,
-            "expr": "rate(container_cpu_usage_seconds_total{namespace=\"$deployment\", container=\"webserver\"}[5m])",
+            "expr": "rate(container_cpu_usage_seconds_total{namespace=\"$deployment\", container=\"apiserver\"}[5m])",
             "interval": "",
             "legendFormat": "{{pod}}",
             "range": true,
@@ -2626,14 +2626,14 @@
               "uid": "${DS_GRAFANACLOUD-PROM}"
             },
             "exemplar": false,
-            "expr": "max(kube_pod_container_resource_limits_cpu_cores{container=\"webserver\", namespace=\"$deployment\"}) * 100",
+            "expr": "max(kube_pod_container_resource_limits_cpu_cores{container=\"apiserver\", namespace=\"$deployment\"}) * 100",
             "hide": false,
             "interval": "",
             "legendFormat": "Limit",
             "refId": "Limit"
           }
         ],
-        "title": "Webserver CPU",
+        "title": "API Server CPU",
         "type": "timeseries"
       },
       {
@@ -2724,7 +2724,7 @@
               "uid": "${DS_GRAFANACLOUD-PROM}"
             },
             "exemplar": false,
-            "expr": "container_memory_working_set_bytes{namespace=\"$deployment\", container=\"webserver\"}",
+            "expr": "container_memory_working_set_bytes{namespace=\"$deployment\", container=\"apiserver\"}",
             "hide": false,
             "interval": "",
             "legendFormat": "{{pod}}",
@@ -2736,14 +2736,14 @@
               "uid": "${DS_GRAFANACLOUD-PROM}"
             },
             "exemplar": false,
-            "expr": "max(kube_pod_container_resource_limits_memory_bytes{namespace=\"$deployment\", container=\"webserver\"})",
+            "expr": "max(kube_pod_container_resource_limits_memory_bytes{namespace=\"$deployment\", container=\"apiserver\"})",
             "hide": false,
             "interval": "",
             "legendFormat": "Limit",
             "refId": "B"
           }
         ],
-        "title": "Webserver Memory",
+        "title": "API Server Memory",
         "type": "timeseries"
       },
       {
