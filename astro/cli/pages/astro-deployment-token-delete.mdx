@@ -1,0 +1,40 @@
+---
+title: 'astro deployment token delete'
+slug: astro-deployment-token-delete
+description: Delete a Deployment API token.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info> This command is only available on Astro. </Info>
+
+Delete a [Deployment API Token](../deployment-api-tokens).
+
+See [Authenticate an automation tool](../automation-authentication) to use your API token in an automated process.
+
+## Usage
+
+```sh
+astro deployment token delete --deployment-id=<deployment-id>
+```
+
+## Options
+
+| Option                         | Description                                                                            | Possible Values                                                                |
+| ------------------------------ | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `-f`,`--force`           |    Delete or remove the API token without showing a warning                                                | N/A |
+| `-t`,`--name`           |    The name of the token to be deleted. If the name contains a space, specify the entire name within quotes ""                                                | String |
+
+## Examples
+
+```bash
+# Delete a Deployment API token
+astro deployment token delete --deployment-id=clukapi6r000008l58530cg8i
+```
+
+## Related Commands
+
+- [`astro deployment token list`](astro-deployment-token-list)
+- [`astro deployment token rotate`](astro-deployment-token-rotate)
+- [`astro deployment token update`](astro-deployment-token-update)

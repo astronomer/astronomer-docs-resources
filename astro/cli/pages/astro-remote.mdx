@@ -1,0 +1,57 @@
+---
+title: 'astro remote'
+slug: astro-remote
+description: Build and deploy remote client images for Remote Execution.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info>This command is only available on Astro.</Info>
+
+The `astro remote` command group enables workflows for building and deploying remote client images as part of Remote Execution Deployments.
+
+
+## astro remote deploy
+
+Builds and deploys a remote client image from your Astro project to a specified remote registry.
+
+### Usage
+
+```sh
+astro remote deploy
+```
+
+### Description
+
+Builds and deploys a remote client image from your Astro project to a specified remote registry. The command blocks deployment if your client image uses a newer version of Astro Runtime than the target Deployment environment to ensure compatibility.
+
+### Options
+
+| Option                           | Description                                                                                                                   | Possible Values                                                     |
+|---------------------------------- |-----------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------|
+| `--build-secrets` |   Mimics `docker build --secret` flag. See [Build Secrets](https://docs.docker.com/build/building/secrets/) for more information. | String array Example input: `id=mysecret,src=secrets.txt`           |
+| `-h`, `--help` | Help for the command. | N/A|
+|  `-i`, `--image-name` | Name of a custom image to deploy, or image name with custom tag. The image must be present on the local machine. | String (image name) |
+| `--platform` | Target platform for client image build. Defaults to host machine platform. | String. For example, `linux/amd64` or`linux/arm64` |
+
+### Examples
+
+Deploy with a specific platform:
+
+```sh
+$ astro remote deploy --platform linux/amd64,linux/arm64
+```
+
+Deploy a pre-built image:
+
+```sh
+$ astro remote deploy --image-name my-custom-image:tag
+
+```
+
+Deploy with build secrets:
+
+```sh
+$ astro remote deploy --build-secrets id=mysecret,src=secrets.txt
+```

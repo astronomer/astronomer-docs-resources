@@ -1,0 +1,109 @@
+---
+title: 'astro dev start'
+slug: astro-dev-start
+description: Build your Astro project and start a local Airflow environment.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info>The behavior and format of this command are the same for both Astro and Astro Private Cloud.</Info>
+
+Start a local Airflow environment in Docker mode (default) or [standalone mode](#standalone-mode) (without Docker).
+
+For more information, see [Build and run a project locally](run-airflow-locally).
+
+## Usage
+
+```sh
+astro dev start
+```
+
+## Options
+
+| Option                  | Description                                                                                                                                                                                                                                                        | Possible Values                                                                     |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------- |
+| `--build-secrets` | Run `docker build --secret` to mount a secret value to your Docker image. Docker mode only. | `id=<your-secret-id>, src=<path-to-secret> .` See [Docker documentation](https://docs.docker.com/build/building/secrets/#secret-mounts). |
+| `--compose-file`        | The location of a custom Docker Compose file to use for starting Airflow on Docker. Docker mode only.                                                                                                                                                                                | Any valid filepath                                                                  |
+| `--deployment-id`        | Specifies a Deployment whose Environment Manager configurations you want to use locally. When Airflow builds locally, Astro populates the Airflow metadata database with the Airflow objects specified from the Deployment Environment Manager in the Astro UI. Local development access to connections must be enabled first. See [Use Airflow connections hosted on Astro in a local environment](local-connections).                                          | Any valid Deployment ID                                                             |
+| `--docker`              | Run in Docker mode. Use to override the `dev.mode` project config for a single command.                                                                                                                                                                            | None                                                                                |
+| `-e`,`--env`            | Path to your environment variable file. Default is `.env`                                                                                                                                                                                                          | Valid filepaths                                                                     |
+| `-f`, `--foreground`    | Run Airflow in the foreground instead of as a background process. Standalone mode only.                                                                                                                                                                             | None                                                                                |
+| `-i`, `--image-name`    | The name of a pre-built custom Docker image to use with your project. The image must be available on your local machine. Docker mode only.                                                                                                              | A valid name for a pre-built Docker image based on Astro Runtime                    |
+| `-n`, `--no-browser`    | Starts a local Airflow environment without opening a web browser for the Airflow UI. Docker mode only.                                                                                                                                                                                | None                                                                                |
+| `--no-cache`            | Do not use cache when building your Astro project into a Docker image. Docker mode only.                                                                                                                                                                                              | None                                                                                |
+| `--no-proxy`            | Disable the built-in reverse proxy and use classic fixed-port behavior.                                                                                                                                                                                             | None                                                                                |
+| `-p`, `--port`          | Port for the Airflow API server. Standalone mode only.                                                                                                                                                                                                              | Any valid port number                                                               |
+| `-s`, `--settings-file` | Settings file from which to import Airflow objects. Default is `airflow_settings.yaml`.                                                                                                                                                                            | Any valid path to an Airflow settings file                                          |
+| `--standalone`          | Run in standalone mode without Docker. Use to override the `dev.mode` project config for a single command. See [Standalone mode](#standalone-mode).                                                                                                                 | None                                                                                |
+| `--wait`                | Amount of time to wait for the webserver to get healthy before timing out. The default is 1 minute for most machines and 5 minutes for Apple M1 machines.                                                                                                          | Time in minutes defined as `<integer>m` and time in seconds defined as `<integer>s` |
+| `-workspace-id`         | Specifies a Workspace whose Environment Manager configurations you want to use locally. When Airflow builds locally, Astro populates the Airflow metadata database with the Airflow objects to all Deployments in the Workspace. | Any valid Workspace ID                                                              |
+
+## Examples
+
+```sh
+$ astro dev start --env=/users/username/documents/myfile.env
+```
+
+<Info>
+
+The following error can sometimes occur when the CLI tries to build your Astro Runtime image using Podman:
+
+```bash
+WARN[0010] SHELL is not supported for OCI image format, [/bin/bash -o pipefail -e -u -x -c] will be ignored. Must use `docker` format
+```
+
+You can resolve this issue by exporting the `BUILDAH_FORMAT` [environment variable](../environment-variables) to Podman:
+
+```dockerfile
+export BUILDAH_FORMAT=docker
+```
+
+</Info>
+
+## Standalone mode
+
+Standalone mode runs Airflow directly on your machine in a virtual environment, without Docker. Use it when Docker isn't available or when you want a lighter-weight local setup.
+
+To set standalone as the default mode for a project:
+
+```bash
+astro config set dev.mode standalone
+```
+
+To use standalone mode for a single command:
+
+```bash
+astro dev start --standalone
+```
+
+To switch back to Docker mode:
+
+```bash
+astro config set dev.mode docker
+```
+
+The following commands are not available in standalone mode:
+
+- `astro dev build`
+- `astro dev upgrade-test`
+- `astro dev compose-export`
+
+<Note>
+`astro dev run --standalone` is not supported. To run Airflow CLI commands in standalone mode, set standalone as the default mode first:
+
+```bash
+astro config set dev.mode standalone
+astro dev run dags list
+```
+
+</Note>
+
+## Related Commands
+
+- [`astro dev restart`](astro-dev-restart)
+- [`astro dev stop`](astro-dev-stop)
+- [`astro dev kill`](astro-dev-kill)
+- [`astro dev init`](astro-dev-init)
+- [`astro dev run`](astro-dev-run)
+- [`astro dev logs`](astro-dev-logs)

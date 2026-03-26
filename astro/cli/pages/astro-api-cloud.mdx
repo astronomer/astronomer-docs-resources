@@ -1,0 +1,58 @@
+---
+title: 'astro api cloud'
+slug: astro-api-cloud
+description: Make authenticated requests to the Astro platform API.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+Make authenticated requests to the [Astro platform API](https://www.astronomer.io/docs/astro/api/v-1/overview) using the current context's bearer token.
+
+## Usage
+
+```bash
+astro api cloud [command] [flags]
+```
+
+## Commands
+
+| Command                         | Description                                                                |
+| ------------------------------- | -------------------------------------------------------------------------- |
+| `ls`                            | List all available Astro API endpoints.                              |
+| `describe <operation-id>`       | Show details about an endpoint, including parameters and response schema.  |
+| `<operation-id> [request-body-fields]` | Call an endpoint by its operation ID.                               |
+
+## Options
+
+| Option                     | Description                                                                                   | Possible Values                                       |
+| -------------------------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| `--generate`               | Print the equivalent `curl` command instead of executing the request.                         | None                                                  |
+| `--jq <filter>`            | Apply a `jq` filter to the response output.                                                   | Any valid `jq` expression                             |
+| `--path-param <key=value>` | Override a path parameter in the request URL.                                                 | A key-value pair such as `organizationId=<org-id>`    |
+| `--silent`                 | Suppress response output.                                                                     | None                                                  |
+| `--slurp`                  | Collect all paginated results into a single array instead of streaming pages.                 | None                                                  |
+| `--template <template>`    | Format the response using a Go template.                                                      | Any valid Go template string                          |
+
+## Examples
+
+```bash
+# List all available Astro API endpoints
+$ astro api cloud ls
+
+# Show details about the list-deployments endpoint
+$ astro api cloud describe list-deployments
+
+# List Deployments for an organization
+$ astro api cloud list-deployments --path-param organizationId=<org-id>
+
+# Filter the response with jq
+$ astro api cloud list-deployments --path-param organizationId=<org-id> --jq '.deployments[].name'
+
+# Print the equivalent curl command for a request
+$ astro api cloud list-deployments --path-param organizationId=<org-id> --generate
+```
+
+## Related Commands
+
+- [`astro api airflow`](astro-api-airflow)

@@ -1,0 +1,64 @@
+---
+title: 'astro api airflow'
+slug: astro-api-airflow
+description: Make authenticated requests to the Airflow REST API.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+Make authenticated requests to the [Airflow REST API](https://airflow.apache.org/docs/apache-airflow/stable/stable-rest-api-ref.html) for a local or deployed Airflow instance. The CLI automatically detects the Airflow version and resolves the OpenAPI specification to provide endpoint discovery.
+
+## Usage
+
+```bash
+astro api airflow [command] [flags]
+```
+
+## Commands
+
+| Command                         | Description                                                   |
+| ------------------------------- | ------------------------------------------------------------- |
+| `ls`                            | List all available Airflow REST API endpoints.                |
+| `describe <operation-id>`       | Show details about an endpoint, including parameters and response schema. |
+| `<operation-id> [request-body-fields]` | Call an endpoint by its operation ID.                |
+
+To call an endpoint on an Astro Deployment instead of your local environment, use the `-d` flag with a Deployment ID.
+
+## Options
+
+| Option                  | Description                                                                                       | Possible Values                                       |
+| ----------------------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| `--generate`            | Print the equivalent `curl` command instead of executing the request.                             | None                                                  |
+| `-d`, `--deployment-id` | The ID of an Astro Deployment to send the request to.                                             | Any valid Deployment ID                               |
+| `--jq <filter>`         | Apply a `jq` filter to the response output.                                                       | Any valid `jq` expression                             |
+| `--path-param <key=value>` | Override a path parameter in the request URL.                                                  | A key-value pair such as `dagId=my_dag`               |
+| `--silent`              | Suppress response output.                                                                         | None                                                  |
+| `--slurp`               | Collect all paginated results into a single array instead of streaming pages.                     | None                                                  |
+| `--template <template>` | Format the response using a Go template.                                                          | Any valid Go template string                          |
+
+## Examples
+
+```bash
+# List all available Airflow REST API endpoints for a local environment
+$ astro api airflow ls
+
+# Show details about the get_dags endpoint
+$ astro api airflow describe get_dags
+
+# Call the get_health endpoint on a local Airflow instance
+$ astro api airflow get_health
+
+# Call the get_dags endpoint on a deployed Airflow instance
+$ astro api airflow get_dags -d <deployment-id>
+
+# Call an endpoint and filter the response with jq
+$ astro api airflow get_dags --jq '.dags[].dag_id'
+
+# Print the equivalent curl command for a request
+$ astro api airflow get_health --generate
+```
+
+## Related Commands
+
+- [`astro api cloud`](astro-api-cloud)

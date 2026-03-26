@@ -1,0 +1,41 @@
+---
+title: 'astro dev proxy'
+slug: astro-dev-proxy
+description: Manage the built-in reverse proxy for local Airflow development.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info>The behavior and format of this command are the same for both Astro and Astro Private Cloud.</Info>
+
+Manage the built-in reverse proxy for local Airflow development.
+
+The built-in reverse proxy routes `<project>.localhost:6563` to the correct local Airflow instance, letting you run multiple Airflow projects simultaneously without manually configuring ports. The proxy starts automatically when you run `astro dev start` and stops when the last project stops.
+
+When working in a git worktree, the hostname includes both the worktree name and the repository name: `<worktree>.<repo>.localhost:6563`.
+
+To disable the proxy for a single start command, use `astro dev start --no-proxy`.
+
+## astro dev proxy status
+
+Show all running Airflow projects and their proxy routes.
+
+```bash
+astro dev proxy status
+```
+
+If the proxy daemon has stopped unexpectedly, this command automatically restarts it and restores all routes from `~/.astro/proxy/routes.json`.
+
+## astro dev proxy stop
+
+Stop the reverse proxy daemon.
+
+```bash
+astro dev proxy stop
+```
+
+## Related Commands
+
+- [`astro dev start`](astro-dev-start)
+- [`astro dev stop`](astro-dev-stop)

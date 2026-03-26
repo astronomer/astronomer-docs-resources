@@ -1,0 +1,355 @@
+navigation:
+  - page: "Astro CLI"
+    path: ../docs/pages/cli/cli-overview.mdx
+  - page: "Quickstart"
+    path: ../docs/pages/cli/get-started-cli.mdx
+  - section: "Install the CLI"
+    collapsed: true
+    contents:
+      - page: "Install the Astro CLI"
+        path: ../docs/pages/cli/install-cli.mdx
+      - page: "Uninstall the Astro CLI"
+        path: ../docs/pages/cli/uninstall-cli.mdx
+      - page: "Upgrade the Astro CLI"
+        path: ../docs/pages/cli/upgrade-cli.mdx
+      - page: "Switch between Podman and Docker"
+        path: ../docs/pages/cli/switch-container-management.mdx
+
+  - section: Develop with the CLI
+    collapsed: true
+    contents:
+      - page: "Develop your project"
+        path: ../docs/pages/cli/develop-project.mdx
+      - section: Add Airflow providers and packages
+        contents:
+          - page: "Add Airflow providers, Python packages, and OS packages"
+            path: ../docs/pages/cli/add-providers-packages.mdx
+          - page: "Add Private Python packages"
+            path: ../docs/pages/cli/private-python-packages.mdx
+      - section: Run Airflow locally
+        contents:
+          - page: "Overview"
+            path: ../docs/pages/cli/local-airflow-overview.mdx
+          - page: "Basic setup"
+            path: ../docs/pages/cli/run-airflow-locally.mdx
+          - page: "Use Airflow connections from Astro"
+            path: ../docs/pages/cli/local-connections.mdx
+          - page: "Troubleshoot a local environment"
+            path: ../docs/pages/cli/troubleshoot-locally.mdx
+      - page: "Test your DAGs"
+        path: ../docs/pages/cli/test-your-astro-project-locally.mdx
+  - section: Configure the CLI
+    collapsed: true
+    contents:
+      - page: "Configure the CLI"
+        path: ../docs/pages/cli/configure-cli.mdx
+      - page: "Use Podman"
+        path: ../docs/pages/cli/use-podman.mdx
+      - page: "Customize your Dockerfile"
+        path: ../docs/pages/cli/customize-dockerfile.mdx
+      - section: Authenticate to cloud services
+        collapsed: true
+        path: ../docs/pages/cli/authenticate-to-clouds.mdx
+        contents:
+          - page: AWS
+            path: ../docs/pages/cli/authenticate-to-aws.mdx
+          - page: GCP
+            path: ../docs/pages/cli/authenticate-to-gcp.mdx
+          - page: Azure
+            path: ../docs/pages/cli/authenticate-to-azure.mdx
+      - page: "Ignore project files"
+        path: ../docs/pages/cli/airflowignore.mdx
+  - section: Release information
+    collapsed: true
+    contents:
+      - page: "Release notes"
+        path: ../docs/pages/cli/release-notes.mdx
+      - page: "Release and lifecycle policy"
+        path: ../docs/pages/cli/release-lifecycle-policy.mdx
+  - section: CLI reference
+    collapsed: true
+    path: ../docs/pages/cli/reference.mdx
+    contents:
+      - page: "astro completion"
+        path: ../docs/pages/cli/astro-completion.mdx
+      - section: astro api
+        path: ../docs/pages/cli/astro-api.mdx
+        contents:
+          - page: "astro api airflow"
+            path: ../docs/pages/cli/astro-api-airflow.mdx
+          - page: "astro api cloud"
+            path: ../docs/pages/cli/astro-api-cloud.mdx
+
+      - section: astro config
+        path: ../docs/pages/cli/astro-config.mdx
+        contents:
+          - page: "astro config get"
+            path: ../docs/pages/cli/astro-config-get.mdx
+          - page: "astro config set"
+            path: ../docs/pages/cli/astro-config-set.mdx
+
+      - section: astro context
+        path: ../docs/pages/cli/astro-context.mdx
+        contents:
+          - page: "astro context delete"
+            path: ../docs/pages/cli/astro-context-delete.mdx
+          - page: "astro context list"
+            path: ../docs/pages/cli/astro-context-list.mdx
+          - page: "astro context switch"
+            path: ../docs/pages/cli/astro-context-switch.mdx
+
+      - section: astro dbt
+        path: ../docs/pages/cli/astro-dbt.mdx
+        contents:
+          - page: "astro dbt delete"
+            path: ../docs/pages/cli/astro-dbt-delete.mdx
+          - page: "astro dbt deploy"
+            path: ../docs/pages/cli/astro-dbt-deploy.mdx
+      - page: "astro deploy"
+        path: ../docs/pages/cli/astro-deploy.mdx
+      - section: astro deployment
+        path: ../docs/pages/cli/astro-deployment.mdx
+        contents:
+          - page: "astro deployment airflow upgrade"
+            path: ../docs/pages/cli/astro-deployment-airflow-upgrade.mdx
+          - section: "astro deployment airflow-variable"
+            contents:
+              - page: "astro deployment airflow-variable copy"
+                path: ../docs/pages/cli/astro-deployment-airflow-variable-copy.mdx
+              - page: "astro deployment airflow-variable create"
+                path: ../docs/pages/cli/astro-deployment-airflow-variable-create.mdx
+              - page: "astro deployment airflow-variable list"
+                path: ../docs/pages/cli/astro-deployment-airflow-variable-list.mdx
+              - page: "astro deployment airflow-variable update"
+                path: ../docs/pages/cli/astro-deployment-airflow-variable-update.mdx
+          - section: "astro deployment connection"
+            contents:
+              - page: "astro deployment connection copy"
+                path: ../docs/pages/cli/astro-deployment-connection-copy.mdx
+              - page: "astro deployment connection create"
+                path: ../docs/pages/cli/astro-deployment-connection-create.mdx
+              - page: "astro deployment connection list"
+                path: ../docs/pages/cli/astro-deployment-connection-list.mdx
+              - page: "astro deployment connection update"
+                path: ../docs/pages/cli/astro-deployment-connection-update.mdx
+          - section: "astro deployment pool"
+            contents:
+              - page: "astro deployment pool copy"
+                path: ../docs/pages/cli/astro-deployment-pool-copy.mdx
+              - page: "astro deployment pool create"
+                path: ../docs/pages/cli/astro-deployment-pool-create.mdx
+              - page: "astro deployment pool list"
+                path: ../docs/pages/cli/astro-deployment-pool-list.mdx
+              - page: "astro deployment pool update"
+                path: ../docs/pages/cli/astro-deployment-pool-update.mdx
+          - section: "astro deployment token"
+            contents:
+              - page: "astro deployment token create"
+                path: ../docs/pages/cli/astro-deployment-token-create.mdx
+              - page: "astro deployment token delete"
+                path: ../docs/pages/cli/astro-deployment-token-delete.mdx
+              - page: "astro deployment token list"
+                path: ../docs/pages/cli/astro-deployment-token-list.mdx
+              - page: "astro deployment token organization-token"
+                path: ../docs/pages/cli/astro-deployment-token-organization-token.mdx
+              - page: "astro deployment token rotate"
+                path: ../docs/pages/cli/astro-deployment-token-rotate.mdx
+              - page: "astro deployment token update"
+                path: ../docs/pages/cli/astro-deployment-token-update.mdx
+              - page: "astro deployment token workspace-token"
+                path: ../docs/pages/cli/astro-deployment-token-workspace-token.mdx
+          - section: "astro deployment variable"
+            contents:
+              - page: "astro deployment variable create"
+                path: ../docs/pages/cli/astro-deployment-variable-create.mdx
+              - page: "astro deployment variable list"
+                path: ../docs/pages/cli/astro-deployment-variable-list.mdx
+              - page: "astro deployment variable update"
+                path: ../docs/pages/cli/astro-deployment-variable-update.mdx
+          - section: "astro deployment worker-queue"
+            contents:
+              - page: "astro deployment worker-queue create"
+                path: ../docs/pages/cli/astro-deployment-worker-queue-create.mdx
+              - page: "astro deployment worker-queue delete"
+                path: ../docs/pages/cli/astro-deployment-worker-queue-delete.mdx
+              - page: "astro deployment worker-queue update"
+                path: ../docs/pages/cli/astro-deployment-worker-queue-update.mdx
+          - page: "astro deployment create"
+            path: ../docs/pages/cli/astro-deployment-create.mdx
+          - page: "astro deployment delete"
+            path: ../docs/pages/cli/astro-deployment-delete.mdx
+          - page: "astro deployment hibernate"
+            path: ../docs/pages/cli/astro-deployment-hibernate.mdx
+          - page: "astro deployment inspect"
+            path: ../docs/pages/cli/astro-deployment-inspect.mdx
+          - page: "astro deployment list"
+            path: ../docs/pages/cli/astro-deployment-list.mdx
+          - page: "astro deployment logs"
+            path: ../docs/pages/cli/astro-deployment-logs.mdx
+          - page: "astro deployment runtime migrate"
+            path: ../docs/pages/cli/astro-deployment-runtime-migrate.mdx
+          - page: "astro deployment runtime upgrade"
+            path: ../docs/pages/cli/astro-deployment-runtime-upgrade.mdx
+          - page: "astro deployment service-account"
+            path: ../docs/pages/cli/astro-deployment-service-account.mdx
+          - page: "astro deployment team"
+            path: ../docs/pages/cli/astro-deployment-team.mdx
+          - page: "astro deployment update"
+            path: ../docs/pages/cli/astro-deployment-update.mdx
+          - page: "astro deployment user"
+            path: ../docs/pages/cli/astro-deployment-user.mdx
+          - page: "astro deployment wake-up"
+            path: ../docs/pages/cli/astro-deployment-wake-up.mdx
+
+      - section: astro dev
+        path: ../docs/pages/cli/astro-dev.mdx
+        contents:
+          - page: "astro dev bash"
+            path: ../docs/pages/cli/astro-dev-bash.mdx
+          - page: "astro dev build"
+            path: ../docs/pages/cli/astro-dev-build.mdx
+          - page: "astro dev init"
+            path: ../docs/pages/cli/astro-dev-init.mdx
+          - page: "astro dev kill"
+            path: ../docs/pages/cli/astro-dev-kill.mdx
+          - page: "astro dev logs"
+            path: ../docs/pages/cli/astro-dev-logs.mdx
+          - page: "astro dev object export"
+            path: ../docs/pages/cli/astro-dev-object-export.mdx
+          - page: "astro dev object import"
+            path: ../docs/pages/cli/astro-dev-object-import.mdx
+          - page: "astro dev parse"
+            path: ../docs/pages/cli/astro-dev-parse.mdx
+          - page: "astro dev proxy"
+            path: ../docs/pages/cli/astro-dev-proxy.mdx
+          - page: "astro dev ps"
+            path: ../docs/pages/cli/astro-dev-ps.mdx
+          - page: "astro dev pytest"
+            path: ../docs/pages/cli/astro-dev-pytest.mdx
+          - page: "astro dev restart"
+            path: ../docs/pages/cli/astro-dev-restart.mdx
+          - page: astro dev run
+            path: ../docs/pages/cli/astro-dev-run.mdx
+          - page: "astro dev start"
+            path: ../docs/pages/cli/astro-dev-start.mdx
+          - page: "astro dev stop"
+            path: ../docs/pages/cli/astro-dev-stop.mdx
+          - page: "astro dev upgrade-test"
+            path: ../docs/pages/cli/astro-dev-upgrade-test.mdx
+
+      - section: astro ide
+        path: ../docs/pages/cli/astro-ide.mdx
+        contents:
+          - page: "astro ide project export"
+            path: ../docs/pages/cli/astro-ide-project-export.mdx
+          - page: "astro ide project import"
+            path: ../docs/pages/cli/astro-ide-project-import.mdx
+          - page: "astro ide project list"
+            path: ../docs/pages/cli/astro-ide-project-list.mdx
+
+      - page: "astro login"
+        path: ../docs/pages/cli/astro-login.mdx
+      - page: "astro logout"
+        path: ../docs/pages/cli/astro-logout.mdx
+      - section: astro organization
+        path: ../docs/pages/cli/astro-organization.mdx
+        contents:
+          - page: "astro organization audit-logs"
+            path: ../docs/pages/cli/astro-organization-audit-logs.mdx
+          - page: "astro organization list"
+            path: ../docs/pages/cli/astro-organization-list.mdx
+          - page: "astro organization switch"
+            path: ../docs/pages/cli/astro-organization-switch.mdx
+          - page: "astro organization role list"
+            path: ../docs/pages/cli/astro-organization-role-list.mdx
+          - page: "astro organization team create"
+            path: ../docs/pages/cli/astro-organization-team-create.mdx
+          - page: "astro organization team delete"
+            path: ../docs/pages/cli/astro-organization-team-delete.mdx
+          - page: "astro organization team list"
+            path: ../docs/pages/cli/astro-organization-team-list.mdx
+          - page: "astro organization team update"
+            path: ../docs/pages/cli/astro-organization-team-update.mdx
+          - page: "astro organization team user"
+            path: ../docs/pages/cli/astro-organization-team-user.mdx
+          - page: "astro organization token create"
+            path: ../docs/pages/cli/astro-organization-token-create.mdx
+          - page: "astro organization token delete"
+            path: ../docs/pages/cli/astro-organization-token-delete.mdx
+          - page: "astro organization token list"
+            path: ../docs/pages/cli/astro-organization-token-list.mdx
+          - page: "astro organization token roles"
+            path: ../docs/pages/cli/astro-organization-token-roles.mdx
+          - page: "astro organization token rotate"
+            path: ../docs/pages/cli/astro-organization-token-rotate.mdx
+          - page: "astro organization token update"
+            path: ../docs/pages/cli/astro-organization-token-update.mdx
+          - page: "astro organization user invite"
+            path: ../docs/pages/cli/astro-organization-user-invite.mdx
+          - page: "astro organization user list"
+            path: ../docs/pages/cli/astro-organization-user-list.mdx
+          - page: "astro organization user update"
+            path: ../docs/pages/cli/astro-organization-user-update.mdx
+
+      - page: "astro remote"
+        path: ../docs/pages/cli/astro-remote.mdx
+      - page: "astro run"
+        path: ../docs/pages/cli/astro-run.mdx
+      - page: "astro team"
+        path: ../docs/pages/cli/astro-team.mdx
+      - section: astro telemetry
+        path: ../docs/pages/cli/astro-telemetry.mdx
+        contents:
+          - page: "astro telemetry disable"
+            path: ../docs/pages/cli/astro-telemetry-disable.mdx
+          - page: "astro telemetry enable"
+            path: ../docs/pages/cli/astro-telemetry-enable.mdx
+      - page: "astro user create"
+        path: ../docs/pages/cli/astro-user-create.mdx
+      - page: "astro version"
+        path: ../docs/pages/cli/astro-version.mdx
+      - section: astro workspace
+        path: ../docs/pages/cli/astro-workspace.mdx
+        contents:
+          - page: "astro workspace create"
+            path: ../docs/pages/cli/astro-workspace-create.mdx
+          - page: "astro workspace delete"
+            path: ../docs/pages/cli/astro-workspace-delete.mdx
+          - page: "astro workspace list"
+            path: ../docs/pages/cli/astro-workspace-list.mdx
+          - page: "astro workspace service account"
+            path: ../docs/pages/cli/astro-workspace-service-account.mdx
+          - page: "astro workspace switch"
+            path: ../docs/pages/cli/astro-workspace-switch.mdx
+          - page: "astro workspace team add"
+            path: ../docs/pages/cli/astro-workspace-team-add.mdx
+          - page: "astro workspace team list"
+            path: ../docs/pages/cli/astro-workspace-team-list.mdx
+          - page: "astro workspace team remove"
+            path: ../docs/pages/cli/astro-workspace-team-remove.mdx
+          - page: "astro workspace team update"
+            path: ../docs/pages/cli/astro-workspace-team-update.mdx
+          - page: "astro workspace token add"
+            path: ../docs/pages/cli/astro-workspace-token-add.mdx
+          - page: "astro workspace token create"
+            path: ../docs/pages/cli/astro-workspace-token-create.mdx
+          - page: "astro workspace token delete"
+            path: ../docs/pages/cli/astro-workspace-token-delete.mdx
+          - page: "astro workspace token list"
+            path: ../docs/pages/cli/astro-workspace-token-list.mdx
+          - page: "astro workspace token organization-token"
+            path: ../docs/pages/cli/astro-workspace-token-organization-token.mdx
+          - page: "astro workspace token rotate"
+            path: ../docs/pages/cli/astro-workspace-token-rotate.mdx
+          - page: "astro workspace token update"
+            path: ../docs/pages/cli/astro-workspace-token-update.mdx
+          - page: "astro workspace update"
+            path: ../docs/pages/cli/astro-workspace-update.mdx
+          - page: "astro workspace user add"
+            path: ../docs/pages/cli/astro-workspace-user-add.mdx
+          - page: "astro workspace user list"
+            path: ../docs/pages/cli/astro-workspace-user-list.mdx
+          - page: "astro workspace user remove"
+            path: ../docs/pages/cli/astro-workspace-user-remove.mdx
+          - page: "astro workspace user update"
+            path: ../docs/pages/cli/astro-workspace-user-update.mdx

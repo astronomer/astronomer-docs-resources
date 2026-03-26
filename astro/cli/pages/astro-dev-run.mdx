@@ -1,0 +1,34 @@
+---
+title: 'astro dev run'
+slug: astro-dev-run
+description: Run Airflow CLI commands in a local Airflow environment.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+Run [Airflow CLI commands](https://airflow.apache.org/docs/apache-airflow/stable/cli-and-env-variables-ref.html) in your local Airflow environment. This command is for local development only and cannot be applied to Deployments running on Astro.
+
+## Usage
+
+```sh
+astro dev run <airflow-command>
+```
+
+## Examples
+
+```sh
+$ astro dev run users create --role Admin --username admin --email <your-email-address> --firstname <your-first-name> --lastname <your-last-name> --password admin
+# Create a user in your local Airflow environment using the `airflow user create` Airflow CLI command
+
+$ astro dev run connections export - --file-format=env --serialization-format=json
+# Export connections in your local Airflow environment to STDOUT in a JSON format
+
+$ astro dev run connections export - --file-format=env
+# Export connections in your local Airflow environment to STDOUT in the default URI format
+```
+
+## Related Commands
+
+- [`astro dev logs`](astro-dev-logs)
+- [`astro dev ps`](astro-dev-ps)

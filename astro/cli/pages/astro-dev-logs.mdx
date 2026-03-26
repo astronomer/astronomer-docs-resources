@@ -1,0 +1,47 @@
+---
+title: 'astro dev logs'
+slug: astro-dev-logs
+description: Show logs for Airflow components.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info>The behavior and format of this command are the same for both Astro and Astro Private Cloud.</Info>
+
+Show webserver, scheduler, and triggerer logs from your local Airflow environment.
+
+## Usage
+
+```sh
+astro dev logs
+```
+
+## Options
+
+| Option                | Description                                                                                             | Possible Values |
+| --------------------- | ------------------------------------------------------------------------------------------------------- | --------------- |
+| `--api-server`        | Show only API server logs. In standalone mode, `--webserver` maps to this flag.                         | None            |
+| `--dag-processor`     | Show only dag processor logs.                                                                           | None            |
+| `-f`,`--follow`       | Continue streaming most recent log output to your terminal.                                             | None            |
+| `-s`,`--scheduler`    | Show only scheduler logs.                                                                               | None            |
+| `-t`,`--triggerer`    | Show only triggerer logs.                                                                               | None            |
+| `-w`,`--webserver`    | Show only webserver logs. In standalone mode, this maps to API server logs.                             | None            |
+
+## Examples
+
+```sh
+$ astro dev logs
+# Show the most recent logs from both the Airflow webserver and Scheduler
+
+$ astro dev logs --follow
+# Stream all new webserver and scheduler logs to the terminal
+
+$ astro dev logs --follow --scheduler
+# Stream only new scheduler logs to the terminal
+```
+
+## Related Commands
+
+- [`astro dev ps`](astro-dev-ps)
+- [`astro dev run`](astro-dev-run)

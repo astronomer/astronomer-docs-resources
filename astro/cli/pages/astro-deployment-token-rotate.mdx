@@ -1,0 +1,40 @@
+---
+title: 'astro deployment token rotate'
+slug: astro-deployment-token-rotate
+description: Rotate your Deployment API tokens.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info> This command is only available on Astro. </Info>
+
+Rotate an Astro [Deployment API Token](../deployment-api-tokens).
+
+To use your API token in an automated process, see [Authenticate an automation tool](../automation-authentication).
+
+## Usage
+
+```sh
+astro deployment token rotate <token-id> --deployment-id=<deployment-id> [flags]
+```
+
+## Options
+
+| Option                         | Description                                                                            | Possible Values                                                                |
+| ------------------------------ | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `-c`,`--clean-output`           |    Print only the token as output. Use when writing scripts that run the command.                                           | N/A |
+| `-f`, `--force` | Rotate the Deployment API token without showing a warning. | N/A                                          |
+| `-t`,`--name`          | The name of the token to be rotated. If the name contains a space, specify the entire name within quotes "".          | String                                                         |
+
+## Examples
+
+```bash
+astro deployment token rotate --deployment-id=clukapi6r000008l58530cg8i --name "My token"
+```
+
+## Related Commands
+
+- [`astro deployment token create`](astro-deployment-create)
+- [`astro deployment token list`](astro-deployment-token-list)
+- [`astro deployment token update`](astro-deployment-token-update)

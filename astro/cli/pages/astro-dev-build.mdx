@@ -1,0 +1,46 @@
+---
+title: 'astro dev build'
+slug: astro-dev-build
+description: Build your Astro project into a Docker image.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info>The behavior and format of this command are the same for both Astro and Astro Private Cloud.</Info>
+
+Build your Astro project into a Docker image without starting a local Airflow environment. Use this command to verify that your project builds successfully before deployment or when you need only the image build step.
+
+This command is not available in standalone mode.
+
+## Usage
+
+```bash
+astro dev build
+```
+
+## Options
+
+| Option               | Description                                                                                                                                           | Possible Values                                                                 |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `--build-secrets`    | Run `docker build --secret` to mount a secret value to your Docker image.                                                                             | `id=<your-secret-id>, src=<path-to-secret> .` See [Docker documentation](https://docs.docker.com/build/building/secrets/#secret-mounts). |
+| `-i`, `--image-name` | Tag a pre-built custom image as the project image.                                                                                                    | A valid Docker image name                                                       |
+| `--no-cache`         | Do not use cache when building your Astro project into a Docker image.                                                                                | None                                                                            |
+
+## Examples
+
+```bash
+$ astro dev build
+# Build the project image
+
+$ astro dev build --no-cache
+# Build the project image without using Docker cache
+
+$ astro dev build --image-name my-custom-image:latest
+# Tag a pre-built image as the project image
+```
+
+## Related Commands
+
+- [`astro dev start`](astro-dev-start)
+- [`astro deploy`](astro-deploy)

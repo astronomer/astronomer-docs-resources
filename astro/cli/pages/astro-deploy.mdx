@@ -1,0 +1,163 @@
+---
+title: 'astro deploy'
+slug: astro-deploy
+description: Deploy a local project to an Astro Deployment.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info>The behavior and format of this command differs depending on what Astronomer product you're using. Use the following tabs to change between product contexts.</Info>
+
+<Tabs>
+<Tab title="Astro">
+    [Deploy code](../deploy-code) to a Deployment on Astro.
+
+This command bundles all files in your Astro project and pushes them to Astro. Before completing the process, it tests your dags in your Astro project for parse errors. If this test fails, the deploy to Astro will also fail. This is the same test which runs locally with `astro dev parse`.
+
+When you run `astro deploy`, the CLI prompts you to select from a list of all Deployments that you can access across Workspaces. To bypass this prompt, you can also specify a Deployment ID in the command. To retrieve a Deployment ID, open your Deployment in the Astro UI and copy the value in the **ID** section of the Deployment page. You can also run `astro deployment list` to find a Deployment ID or name.
+
+For teams operating at scale, this command can be automated with a [CI/CD pipeline](../set-up-ci-cd) by using [Deployment API tokens](../deployment-api-tokens) in the request. When `ASTRO_API_TOKEN` is specified as OS-level environment variables on your local machine or in a CI tool, `astro deploy <deployment-id>` can be run without requiring user authentication.
+
+<Tip>
+
+To skip the parsing process before deploys, complete one of the following setups:
+
+- Add `skip_parse: true` to `.astro/config.yaml` in your Astro project.
+- Add `ASTRONOMER_SKIP_PARSE=true` as an environment variable to your local environment or CI/CD pipeline.
+
+</Tip>
+
+## Usage
+
+```sh
+astro deploy <options>
+```
+
+## Options
+
+| Option                    | Description                                                                                                                                                      | Possible Values                                                  |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `<deployment-id>`         | Specifies the Deployment to deploy to and bypasses the Deployment selection prompt                                                                               | Any valid Deployment ID                                          |
+| `--build-secrets`         | Run `docker build --secret` to mount a secret value to your Docker image.                                                                                        | `id=<your-secret-id>, src=<path-to-secret> .` See [Docker documentation](https://docs.docker.com/build/building/secrets/#secret-mounts). |
+| `--description`           | A description for your code deploy. Descriptions appear in the Astro UI in your Deployment's **Deploy History**                                                  | None                                                             |
+| `-d`, `--dags`            | Deploy only your `dags` directory. See [dag-only deploys](../deploy-dags)                                                                                        | None                                                             |
+| `-e`, `--env`             | Location of the file containing environment variables for pytests. By default, this is `.env`.                                                                   | Any valid filepath to an `.env` file                             |
+| `-f`, `--force`           | Force deploy even if your project contains parse errors or uncommitted changes. Parse tests are defined in `.astro/test_dag_integrity_default.py`.                | None                                                             |
+| `-i`, `--image-name`      | The name of a pre-built custom Docker image to use with your project. The image must be available from a Docker registry hosted on your local machine            | A valid name for a pre-built Docker image based on Astro Runtime |
+| `--image`                 | If you have dags-only deploys enabled, use this flag to deploy only your Astro project image. When you use this option, your `dags` folder is not deployed to Astro | None                                                             |
+| `-n`, `--deployment-name` | The name of the Deployment to deploy to. Use as an alternative to `<deployment-id>`.                                                                             | Any valid Deployment name                                        |
+| `--no-dags-base-dir`      | When deploying with `--dags`, place DAG files at the bundle root instead of in a `dags/` folder prefix. Use with Airflow 3 Deployments where the DAG bundle root is added to `sys.path`. | None                                                             |
+| `-p`, `--prompt`          | Force the Deployment selection prompt even if a Deployment ID is specified                                                                                       | None                                                             |
+| `--pytest`                | Deploy code to Astro only if the pytests are passed. By default the pytests are read from the `tests` directory.                                                 | None                                                             |
+| `-s`, `--save`            | Save the current Deployment and working directory combination for future deploys.                                                                                | None                                                             |
+| `-t`, `--test`            | The filepath to an alternative pytest file or directory.                                                                                                         | Valid filepath within your Astro project                         |
+| `-w`, `--wait`            | Wait for the Deployment to become healthy before completing the command.                                                                                         | None                                                             |
+| `--wait-time`             | Time to wait for the Deployment to become healthy before ending the command. Can only be used with `--wait=true`.                                                | A time duration amount, such as `10s` or `1m11s`.                |
+| `--workspace-id <string>` | In the prompt to select a Deployment, only show Deployments within this Workspace.                                                                               | Any valid Workspace ID                                           |
+
+## Examples
+
+To deploy directly to a specific Deployment:
+
+```bash
+astro deploy ckvvfp9tf509941drl4vela81n
+```
+
+To configure the Astro CLI to use a given Deployment and directory as a default for future deploys:
+
+```bash
+astro deploy ckvvfp9tf509941drl4vela81n --save
+```
+
+To use a custom Docker image from your local Docker registry to build your Astro project:
+
+```bash
+astro deploy --image-name your-custom-runtime-image
+```
+
+To deploy only dags from your Astro project to a specific Deployment:
+
+```bash
+astro deploy ckvvfp9tf509941drl4vela81n --dags
+```
+</Tab>
+<Tab title="APC">
+
+[Deploy code](../deploy-code) to a Deployment on Astro Private Cloud.
+
+This command bundles all files in your Astro project and pushes them to Astro Private Cloud.
+
+When you run `astro deploy`, you'll be prompted to select from a list of all Deployments that you can access in all Workspaces. To bypass this prompt, you can specify a Deployment ID in the command. To retrieve a Deployment ID, go to your Deployment's information page in the Astro UI and copy the value after the last `/` in the URL. You can also run `astro deployment list` to retrieve a Deployment ID .
+
+## Options
+
+| Option                    | Description                                                                        | Possible Values         |
+| ------------------------- | ---------------------------------------------------------------------------------- | ----------------------- |
+| `--build-secrets`         | Run `docker build --secret` to mount a secret value to your Docker image.          | `id=<your-secret-id>, src=<path-to-secret> .` See [Docker documentation](https://docs.docker.com/build/building/secrets/#secret-mounts). |
+| `--description <string>`  | Improve traceability by attaching a description to a code deploy. If you don't provide a description, the system automatically assigns a default description based on the deploy type.  | Any string surrounded by quotations |
+| `-d`, `--dags`            | Deploy only your `dags` directory. Works only if dag-only deploys are enabled for the Deployment.                       | None                    |
+| `<deployment-id>`         | Specifies the Deployment to deploy to and bypasses the Deployment selection prompt. Required for dag-only deploys. | Any valid Deployment ID |
+| `-f`,`--force`            | Force deploy even if your project contains errors or uncommitted changes           | None                    |
+| `-i`, `--image-name`      | The name of a pre-built custom Docker image to use with your project. The image must be available on your local machine. If specified, building the image is skipped.            | A valid name for a pre-built Docker image based on Astro Runtime |
+| `--image`                 | Use this flag to deploy only your Astro project image. When you use this option, your `dags` folder is not deployed to Astro. This flag only works for dag-only, Git-sync-based and NFS-based Deployments.| None                                                             |
+| `--no-cache`              | Do not use any images from the container engine's cache when building your project | None                    |
+| `-p`,`--prompt`           | Force the Deployment selection prompt even if a Deployment ID is specified         | None                    |
+| `--remote`                | Directly point the deployment to the remote image and skip pushing the image, if `--image-name` is passed.            | None |
+| `--runtime-version`       | Specify Runtime version of your image, if `--image-name` is passed.               | Valid Runtime version |
+| `-s`,`--save`             | Save the current Deployment and working directory combination for future deploys   | None                    |
+| `--workspace-id <string>` | In the prompt to select a Deployment, only show Deployments within this Workspace  | Any valid Workspace ID  |
+
+## Examples
+
+```sh
+# List of Deployments appears
+$ astro deploy
+
+# Deploy directly to a specific Deployment
+$ astro deploy ckvvfp9tf509941drl4vela81n
+
+# The CLI automatically selects this Deployment for your Astro project
+$ astro deploy ckvvfp9tf509941drl4vela81n --save
+
+# Deploy an image from my private registry without first building it/putting in on my local computer
+$ astro deploy --image-name your-custom-runtime-image --remote --runtime-version=rt_version
+
+```
+</Tab>
+</Tabs>
+
+<Info>
+
+The following error can sometimes occur when the CLI tries to build your Astro Runtime image using Podman:
+
+```bash
+WARN[0010] SHELL is not supported for OCI image format, [/bin/bash -o pipefail -e -u -x -c] will be ignored. Must use `docker` format
+```
+
+You can resolve this issue by exporting the `BUILDAH_FORMAT` [environment variable](../environment-variables) to Podman:
+
+```dockerfile
+export BUILDAH_FORMAT=docker
+```
+
+</Info>
+
+<Info>
+
+If you use Docker Desktop, ensure that the [**Use containerd for pulling and storing images**](https://docs.docker.com/desktop/containerd/#turn-on-the-containerd-image-store-feature) setting is turned off. Otherwise, you might receive errors when you run `astro deploy` such as:
+
+```text
+Push access denied, repository does not exist or may require authorization: server message: insufficient_scope: authorization failed
+# or
+Unable to find image 'barren-ionization-0185/airflow:latest' locally
+Error response from daemon: pull access denied for barren-ionization-0185/airflow, repository does not exist or may require 'docker login'
+```
+
+</Info>
+
+## Related commands
+
+- [`astro login`](astro-login)
+- [`astro deployment list`](astro-deployment-list)
+- [`astro dev parse`](astro-dev-parse)

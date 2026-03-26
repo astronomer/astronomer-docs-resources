@@ -1,0 +1,111 @@
+---
+title: 'Get started with Airflow using the Astro CLI'
+slug: get-started-cli
+description: Create an Airflow project and run it locally on your computer in just a few minutes.
+hide-nav-links: true
+hide-feedback: true
+---
+
+With the Astro CLI, you can run Airflow on your local machine. Follow this quickstart to build an Airflow project from the [Learning Airflow](https://github.com/astronomer/templates/tree/main/learning-airflow) template and run it in a local Airflow environment with just a few commands. At the end of the tutorial, you'll have all of the files and components you need to develop and test Airflow dags locally.
+
+## Step 1: Install the CLI
+
+<Tabs>
+<Tab title="Mac">
+  ```
+  brew install astro
+  ```
+</Tab>
+<Tab title="Windows with winget">
+  ```
+  winget install -e --id Astronomer.Astro
+  ```
+</Tab>
+</Tabs>
+
+## Step 2: Create an Astro project
+
+An _Astro project_ contains the set of files necessary to run Airflow, including dedicated folders for your dag files, plugins, and dependencies. This set of files builds an image that you can run both on your local machine with Airflow and deploy to Astro.
+
+Use [`astro dev init`](astro-dev-init) with the `--from-template` flag to create the project based off of the [Learning Airflow template](https://github.com/astronomer/templates/tree/main/learning-airflow).
+
+```sh
+astro dev init --from-template learning-airflow
+```
+
+This command generates all of the project files you need to run Airflow locally, including an example dag that you can run out of the box. Different [templates](https://github.com/astronomer/templates/tree/main) generate different example dags. See [Create an Astro project](develop-project#create-an-astro-project) for more information about the default project structure.
+
+## Step 3: Run Airflow locally
+
+Running your project locally allows you to test your dags before you deploy them to a production environment. While this step is not required for deploying and running your code on Astro, Astronomer recommends always using the Astro CLI to test locally before deploying.
+
+1. To start running your project in a local Airflow environment, run the following command from the `learning-airflow` project directory:
+
+<Tabs groupId="local-airflow-mode">
+<Tab title="Docker / Podman">
+
+```sh
+astro dev start
+```
+
+This command builds your project and spins up 4 containers on your machine, each for a different Airflow component:
+
+- **Postgres:** Airflow's metadata database
+- **Webserver:** The Airflow component responsible for rendering the Airflow UI
+- **Scheduler:** The Airflow component responsible for monitoring and triggering tasks
+- **Triggerer:** The Airflow component responsible for running Triggers and signaling tasks to resume when their conditions have been met. The triggerer is used exclusively for tasks that are run with [deferrable operators](https://www.astronomer.io/docs/learn/deferrable-operators)
+
+</Tab>
+<Tab title="Standalone (no Docker)">
+
+```sh
+astro dev start --standalone
+```
+
+This command runs Airflow directly on your machine in a virtual environment, without Docker or Podman. To make standalone mode the default for your project, run:
+
+```sh
+astro config set dev.mode standalone
+```
+
+See [astro dev start](astro-dev-start) for all available options.
+
+</Tab>
+</Tabs>
+
+<Note>If you don't have Docker installed, you can use standalone mode to run Airflow directly on your machine in a virtual environment instead. Run `astro dev start --standalone`, or set it as the default for your project with `astro config set dev.mode standalone`. See [astro dev start](astro-dev-start) for all available options.</Note>
+
+2. After your project builds successfully, open the Airflow UI in your web browser at `https://localhost:8080/`.
+
+3. Find your dags in the`dags` directory in the Airflow UI.
+
+    In this directory, you can find an example dag, `example-astronauts`, which was generated with your Astro project. To provide a basic demonstration of an ETL pipeline, this dag shows a simple ETL pipeline example that queries the list of astronauts currently in space from the Open Notify API and prints a statement for each astronaut. The dag uses the TaskFlow API to define tasks in Python, and dynamic task mapping to dynamically print a statement for each astronaut.
+
+<Info>The Astro CLI uses port `8080` for the Airflow webserver and port `5432` for the Airflow metadata database by default. If these ports are already in use on your local computer, an error message might appear. To resolve this error message, see [Run Airflow locally](troubleshoot-locally#ports-are-not-available-for-my-local-airflow-webserver).</Info>
+
+## Step 4: Develop locally with the CLI
+
+Now that you have a locally running project, you can start to develop your Astro project by adding dags, dependencies, environment variables, and more. See [Develop your project](develop-project) for more details on how to modify all aspects of your Astro project.
+
+Most changes you make, including updates to your dag code, are applied automatically to your running environment and don't require rebuilding your project. However, you must rebuild your project and restart your environment to apply changes from any of the following files in your Astro project:
+
+- `packages.txt`
+- `Dockerfile`
+- `requirements.txt`
+- `airflow_settings.yaml`
+
+To restart your local Airflow environment, run:
+
+```sh
+astro dev restart
+```
+
+This command rebuilds your project and restarts your local Airflow environment. Alternatively, you can run `astro dev stop` to stop your environment without restarting, then run `astro dev start` when you want to restart.
+
+## Next Steps
+
+After you have finished Getting Started with the CLI, you can configure your CLI to locally debug your Airflow environment, authenticate to cloud services to test your dags with data stored on the cloud, or you can learn more about developing dags with Astro.
+
+- [Configure the CLI](configure-cli)
+- [Authenticate to cloud services](authenticate-to-clouds)
+- [Build and run a project locally](run-airflow-locally)
