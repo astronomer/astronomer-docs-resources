@@ -1,0 +1,55 @@
+---
+title: 'astro workspace user update'
+slug: astro-workspace-user-update
+description: Update a Workspace user.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info>The behavior and format of this command differs depending on what Astronomer product you're using. Use the following tabs to change product contexts.</Info>
+
+<Tabs>
+<Tab title="Astro">
+Update the role of an existing user in your current Workspace. The CLI prompts you for the user's email.
+
+## Usage
+
+```sh
+astro workspace user update --role <user-role>
+```
+
+## Options
+
+| Option                | Description                                          | Valid Values                                                                     |
+| --------------------- | ---------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `<email>`             | The email address of the user whose role you want to update. | Any valid email                                                                  |
+| `--role` (_Required_) | The user's role in the Workspace.                    | Valid values are `WORKSPACE_ACCESSOR`, `WORKSPACE_MEMBER`, `WORKSPACE_OPERATOR`, `WORKSPACE_AUTHOR`, or `WORKSPACE_OWNER`. |
+
+## Related commands
+
+- [`astro workspace user add`](astro-workspace-user-add)
+- [`astro organization user update`](astro-organization-user-update)
+</Tab>
+<Tab title="APC">
+Update a user's permissions in your current Astronomer Workspace.
+
+## Usage
+
+```sh
+astro workspace user update --email <user-email-address>
+```
+
+## Options
+
+| Option                 | Description                           | Possible Values                                                                                                       |
+| ---------------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `--email` (_Required_) | The user's email.                     | Any valid email address                                                                                               |
+| `--role`               | The role you're updating the user to. | Possible values are `WORKSPACE_VIEWER`, `WORKSPACE_EDITOR`, or `WORKSPACE_ADMIN`. Default value is `WORKSPACE_VIEWER` |
+
+#### Related documentation
+
+- [Manage Workspaces and Deployments on Astronomer](https://www.astronomer.io/docs/astro-private-cloud/v-0-37/manage-workspaces)
+- [Manage User Permissions on Astronomer](https://www.astronomer.io/docs/astro-private-cloud/v-0-37/workspace-permissions)
+</Tab>
+</Tabs>

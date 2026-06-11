@@ -1,0 +1,274 @@
+---
+title: 'Run your Astro project in a local Airflow environment with the CLI'
+slug: run-airflow-locally
+description: Run commands in your local Airflow environment.
+hide-nav-links: true
+hide-feedback: true
+---
+
+Running Airflow locally with the Astro CLI can be an easy way to preview and debug dag changes quickly before deploying your code to Astro. By locally running your dags, you can fix issues with your dags without consuming infrastructure resources or waiting on code deploy processes.
+
+This document explains how to use the Astro CLI to start a local Airflow environment on your computer and interact with your Astro project. To learn more about unit testing for your dags or testing project dependencies when changing Python or Astro Runtime versions, see [Test your project locally](test-your-astro-project-locally).
+
+You can find common issues and resolutions in the [troubleshoot a local environment](troubleshoot-locally) section.
+
+## Start a local Airflow environment
+
+To begin running your project in a local Airflow environment, run:
+
+```bash
+astro dev start
+```
+
+This command builds your project and spins up 4 Docker containers on your machine, each for a different Airflow component.
+
+After the command completes, you can access your project's Airflow UI at `https://localhost:8080/`.
+
+## Restart a local Airflow environment
+
+Restarting your Airflow environment rebuilds your image and restarts the Docker containers running on your local machine with the new image. Restart your environment to apply changes from specific files in your project, or to troubleshoot issues that occur when your project is running.
+
+To restart your local Airflow environment, run:
+
+```sh
+astro dev restart
+```
+
+Alternatively, you can run `astro dev stop` to stop your Docker containers without restarting, then run `astro dev start` when you want to restart.
+
+## Stop a local Airflow environment
+
+Run the following command to stop your local Airflow environment.
+
+```sh
+astro dev stop
+```
+
+Unlike [`astro dev kill`](#hard-reset-your-airflow-environment), this command does not prune mounted volumes and delete data associated with your local Postgres database. If you run this command, Airflow connections and task history will be preserved.
+
+Use this command when you're finished testing Airflow and you want to stop running its components locally.
+
+## View Airflow component logs
+
+You can use the Astro CLI to view logs for your local Airflow environment's webserver, scheduler, and triggerer. This is useful if you want to troubleshoot a specific task instance, or if your local environment does not run properly after a code change.
+
+To view component logs in a local Airflow environment, run:
+
+```sh
+astro dev logs
+```
+
+See the [Astro CLI reference guide](astro-dev-logs) for more details and options.
+
+## Apply changes to a running project
+
+If you update dag code for an Astro project that's currently running locally, the Astro CLI automatically applies your changes to your environment. However, to update other files, you must restart your environment to apply your changes.
+
+Specifically, you must restart your environment to apply changes for any of the following files:
+
+- `packages.txt`
+- `Dockerfile`
+- `requirements.txt`
+- `airflow_settings.yaml`
+
+To restart your local Airflow environment, run:
+
+```sh
+astro dev restart
+```
+
+## Run Airflow CLI commands
+
+To run [Apache Airflow CLI](https://airflow.apache.org/docs/apache-airflow/stable/cli-and-env-variables-ref.html) commands locally, run the following:
+
+```sh
+astro dev run <airflow-cli-command>
+```
+
+For example, the Airflow CLI command for listing connections is `airflow connections list`. To run this command with the Astro CLI, you would run `astro dev run connections list` instead.
+
+`astro dev run` is the equivalent of running `docker exec` in local Airflow containers.
+
+<Info>You can only use `astro dev run` in a local Airflow environment. To automate Airflow actions on Astro, you can use the [Airflow REST API](/astro/airflow-api). For example, you can make a request to the [`dagRuns` endpoint](https://airflow.apache.org/docs/apache-airflow/stable/stable-rest-api-ref.html#operation/post_dag_run) to trigger a dag run programmatically, which is equivalent to running `astro dev run dags trigger` in the Astro CLI.</Info>
+
+## Make requests to the Airflow REST API locally
+
+Make requests to the [Airflow REST API](https://airflow.apache.org/docs/apache-airflow/stable/stable-rest-api-ref.html) in a local Airflow environment with HTTP basic access authentication. This can be useful for testing and troubleshooting API calls before executing them in a Deployment on Astro.
+
+To make local requests with cURL or Python, you only need the username and password for your local user. Both of these values are `admin` by default. They are the same credentials for logging into the Airflow UI, and they're listed when you run `astro dev start`.
+
+To make requests to the Airflow REST API in a Deployment on Astro, see [Airflow API](/astro/airflow-api).
+
+### Airflow 3
+
+Example GET Dags request:
+
+#### cURL
+
+```bash
+
+curl -X POST "http://localhost:8080/auth/token" \
+  -H "Content-Type: application/x-www-form-urlencoded" \               
+  -d "username=admin&password=admin
+{"access_token":"eyJhbGciOiJIUzUx..."}
+
+curl -X GET "http://localhost:8080/api/v2/dags" \
+  -H "Accept: application/json" \                                      
+  -H "Authorization: Bearer eyJhbGciOiJIUzUx..."
+
+```
+
+#### Python
+
+```python
+import requests
+
+# First request: get auth token
+auth_response = requests.post(
+    "http://localhost:8080/auth/token",
+    headers={"Content-Type": "application/x-www-form-urlencoded"},
+    data={"username": "admin", "password": "admin"}
+)
+token = auth_response.json().get("access_token")
+
+# Second request: use the token to list DAGs
+dags_response = requests.get(
+    "http://localhost:8080/api/v2/dags",
+    headers={
+        "Accept": "application/json",
+        "Authorization": f"Bearer {token}"
+    }
+)
+print(dags_response.status_code, dags_response.text)
+
+```
+
+### Airflow 2
+
+Example GET Dags request:
+
+#### cURL
+
+```bash
+curl -X GET localhost:8080/api/v1/<endpoint> --user "admin:admin"
+```
+
+#### Python
+
+```python
+import requests
+
+response = requests.get(
+   url="http://localhost:8080/api/v1/dags",
+   auth=("admin", "admin")
+)
+```
+
+## Hard reset your local environment
+
+In most cases, [restarting your local project](run-airflow-locally#restart-a-local-airflow-environment) is sufficient for testing and making changes to your project. However, it is sometimes necessary to reset your environment and metadata database for testing purposes. To do so, run the following command:
+
+```sh
+astro dev kill
+```
+
+This command forces your running containers to stop and deletes all data associated with your local Postgres metadata database, including Airflow connections, logs, and task history.
+
+## Override the Astro CLI Docker Compose file
+
+The Astro CLI uses a default set of [Docker Compose](https://docs.docker.com/compose/) configurations to define and run local Airflow components. For advanced testing cases, you might need to override these default configurations. For example, you might need to:
+
+- Add extra containers to mimic services that your Airflow environment needs to interact with locally, such as an SFTP server.
+- Change the volumes mounted to any of your local containers.
+
+<Info>The Astro CLI does not support overrides to environment variables that are required globally. For the list of environment variables that Astro enforces, see [Global environment variables](/astro/platform-variables). To learn more about environment variables, read [Environment variables](/astro/environment-variables).</Info>
+
+1. Reference the Astro CLI's default [Docker Compose file](https://github.com/astronomer/astro-cli/blob/main/airflow/include/airflow2/composeyml.go.tmpl) (`composeyml.go.tmpl`) and determine one or more configurations to override.
+<Info>For Airflow 3 Deployments, reference the Astro CLI's default [Airflow 3 Docker Compose file](https://github.com/astronomer/astro-cli/blob/main/airflow/include/airflow3/composeyml.go.tmpl).</Info>
+2. Add a `docker-compose.override.yml` file at the top level of your Astro project.
+3. Specify your new configuration values in `docker-compose.override.yml` file using the same format as in `composeyml.go.tmpl`.
+
+Common use cases are:
+
+- Mounting a volume with additional files
+- Running an additional service to simulate your production environment
+
+### Example: Mounting a volume with additional files
+
+To add another volume mount for a directory named `custom_dependencies`, add the following to your `docker-compose.override.yml` file:
+
+```yaml
+services:
+  scheduler:
+    volumes:
+      - /home/astronomer_project/custom_dependencies:/usr/local/airflow/custom_dependencies:ro
+```
+
+Run the following command to see the directory in your scheduler container:
+
+```sh
+astro dev bash --scheduler "ls -al"
+```
+
+### Example: Running an additional service to simulate your production environment
+
+To run HashiCorp Vault to simulate a production environment that uses a HashiCorp Vault secrets backend:
+
+```yaml
+services:
+  vault:
+    image: hashicorp/vault:1.21
+    networks:
+      - airflow
+    ports:
+      - "8200:8200"
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: "root"
+      VAULT_DEV_LISTEN_ADDRESS: "0.0.0.0:8200"
+    cap_add:
+      - IPC_LOCK
+    command: server -dev
+    volumes:
+      - vault-data:/vault/file
+    healthcheck:
+      test: [ "CMD-SHELL", "VAULT_ADDR=http://127.0.0.1:8200 vault status >/dev/null 2>&1" ]
+      interval: 1s
+      timeout: 2s
+      retries: 60
+
+  # Optional: pre-fill Vault with secrets
+  vault-load-data:
+    image: hashicorp/vault:1.21
+    networks:
+      - airflow
+    depends_on:
+      vault:
+        condition: service_healthy
+    environment:
+      VAULT_ADDR: http://vault:8200
+      VAULT_TOKEN: root
+    restart: "no"
+    entrypoint: ["/bin/sh", "-lc"]
+    command: |
+      '
+      set -e
+      # Only write if secret is not present yet
+      vault kv get -format=json secret/variables/my_api_key >/dev/null 2>&1 || vault kv put secret/variables/my_api_key value="super-secret-api-key"
+      echo "Data loading done."
+      '
+
+volumes:
+  vault-data:
+```
+
+Configure Airflow to use the additional Vault service as a secrets backend:
+
+1. In `.env`, configure:
+
+```
+AIRFLOW__SECRETS__BACKEND='airflow.providers.hashicorp.secrets.vault.VaultBackend'
+AIRFLOW__SECRETS__BACKEND_KWARGS='{"url": "http://vault:8200", "token": "root", "mount_point": "secret", "kv_engine_version": 2, "connections_path": "connections", "variables_path": "variables", "config_path": "config", "verify": false}'
+```
+
+2. Install `apache-airflow-providers-hashicorp` in your `requirements.txt`.
+3. Manually add secrets via http://localhost:8200 (token `root`), or test the provided variable `my_api_key`.

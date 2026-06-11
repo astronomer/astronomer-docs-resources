@@ -1,0 +1,68 @@
+---
+title: 'astro workspace create'
+slug: astro-workspace-create
+description: Create an Astro Workspace.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info>The behavior and format of this command differs depending on what Astronomer product you're using. Use the following tabs to change product contexts.</Info>
+
+Create a Workspace.
+
+<Tabs>
+<Tab title="Astro">
+    ## Usage
+
+```sh
+astro workspace create <options>
+```
+
+## Options
+
+| Option            | Description                                                                                                                             | Valid Values  |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `--description`   | The description for the Workspace.                                                                                                      | Any string    |
+| `--enforce-ci-cd` | Determines whether users are required to use an API token to deploy code.  | `ON` or `OFF` |
+| `--name`          | The name for the Workspace.                                                                                                             | Any string    |
+
+## Examples
+
+```sh
+$ astro workspace create --name "My Deployment" --enforce-ci-cd ON
+```
+
+## Related commands
+
+- [`astro workspace update`](astro-workspace-update)
+- [`astro workspace delete`](astro-workspace-delete)
+- [`astro workspace user update`](astro-workspace-user-update)
+</Tab>
+<Tab title="APC">
+    ## Usage
+
+```sh
+astro workspace create <options>
+```
+
+## Options
+
+| Option            | Description                                                                                                                             | Valid Values  |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `--description`   | The description for the Workspace.                                                                                                      | Any string    |
+| `--label`          | The label for the Workspace.                                                                                                             | Any string    |
+
+## Examples
+
+```sh
+$ astro workspace create --label "My Deployment" --description "My new Deployment"
+```
+
+## Related commands
+
+- [`astro workspace update`](astro-workspace-update)
+- [`astro workspace delete`](astro-workspace-delete)
+- [`astro workspace user update`](astro-workspace-user-update)
+</Tab>
+</Tabs>

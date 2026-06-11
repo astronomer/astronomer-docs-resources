@@ -1,0 +1,25 @@
+---
+title: 'astro context switch'
+slug: astro-context-switch
+description: Switch to an Astronomer product context.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info>The behavior and format of this command are the same for both Astro and Astro Private Cloud.</Info>
+
+Switch to a different Astronomer installation. You can switch to a given Astronomer installation only if you have authenticated to it at least once using `astro login`. If you have not authenticated, run `astro login <base-domain>` instead.
+
+Note that after switching to a different Astronomer installation, you might have to re-authenticate to the installation using `astro login`.
+
+## Usage
+
+```sh
+astro context switch <basedomain>
+```
+
+## Related Commands
+
+- [astro context list](astro-context-list)
+- [astro context delete](astro-context-delete)

@@ -1,0 +1,39 @@
+---
+title: 'Add Airflow providers, Python packages, and operating system packages'
+slug: add-providers-packages
+description: Airflow providers, Python packages, and operating system packages.
+hide-nav-links: true
+hide-feedback: true
+---
+
+Most dags need additional Python or OS-level packages to run. You need to add Python packages, including [Airflow Providers](https://airflow.apache.org/docs/apache-airflow-providers/), to your Astro project's `requirements.txt` file, and OS-level packages to the project's `packages.txt` file.
+
+There are two primary kinds of Python packages that you might need to add to your Astro project:
+
+- **Non-provider Python libraries**. If you’re using Airflow for a data science project, for example, you might use a data science library such as [pandas](https://pandas.pydata.org/) or [NumPy (`numpy`)](https://numpy.org/).
+- **Airflow Providers**. Airflow Providers are Python packages that contain relevant Airflow modules for a third-party service. For example, `apache-airflow-providers-amazon` includes the hooks, operators, and integrations you need to access services on Amazon Web Services (AWS) with Airflow. See [Provider packages](https://airflow.apache.org/docs/apache-airflow-providers/).
+
+Adding the name of a package to the `packages.txt` or `requirements.txt` files of your Astro project installs the package to your Airflow environment.
+
+1. Add the package name to your Astro project. If it’s a Python package, add it to `requirements.txt`. If it’s an OS-level package, add it to `packages.txt`. The latest version of the package that’s publicly available is installed by default.
+
+    To pin a version of a package, use the following syntax:
+
+    ```text
+    <package-name>==<version>
+    ```
+
+    For example, to install NumPy version 1.23.0, add the following to your `requirements.txt` file:
+
+    ```text
+    numpy==1.23.0
+    ```
+
+2. [Restart your local environment](run-airflow-locally#restart-a-local-airflow-environment).
+3. Confirm that your package was installed:
+
+    ```sh
+    astro dev bash --scheduler "pip freeze | grep <package-name>"
+    ```
+
+To learn more about the format of the `requirements.txt` file, see [Requirements File Format](https://pip.pypa.io/en/stable/reference/requirements-file-format/#requirements-file-format) in pip documentation. To browse Python libraries, see [PyPi](https://pypi.org/). To browse Airflow providers, see the [Airflow Registry](https://airflow.apache.org/registry/providers/).

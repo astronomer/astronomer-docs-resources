@@ -1,0 +1,118 @@
+---
+title: "astro dev init"
+slug: astro-dev-init
+description: Initialize an Astro project.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info>
+  The behavior and format of this command are the same for both Astro and Astro
+  Private Cloud.
+</Info>
+
+Initialize an [Astro project](develop-project#create-an-astro-project) in an empty local directory. An Astro project contains the set of files necessary to run Airflow, including dedicated folders for your dag files, plugins, and dependencies. An Astro project can be either run locally with `astro dev start` or pushed to Astronomer with `astro deploy`.
+
+<Tabs>
+<Tab title="Astro">
+
+### Usage
+
+```sh
+astro dev init <project-name>
+```
+
+### Options
+
+| Option                       | Description                                                                                                                                                                            | Possible Values                    |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| `<project-name>`             | Optional name for your Astro project. Creates and initializes a directory with the specified name.                                                                                     | Any string                         |
+| `-a`, `--airflow-version`    | Version of Airflow you want to create an Astro project with. If not specified, latest is assumed. You can change this version in your Dockerfile at any time.                          | String (Airflow version)           |
+| `-v`, `--runtime-version`    | Astro Runtime version to use for project initialization.                                                                                                                               | Any supported Runtime version      |
+| `-n`, `--name`               | Name for your Astro project.                                                                                                                                                           | Any string                         |
+| `--from-template`            | Specify a getting started [template](https://github.com/astronomer/templates) to use as the base for your Astro project. Opens an interactive menu to select from available templates. | N/A (interactive selection)        |
+
+### Examples
+
+```sh
+$ astro dev init
+# Initializes default project
+
+$ astro dev init my-airflow-project
+# Creates and initializes a directory named 'my-airflow-project'
+
+$ astro dev init --name=MyProject
+# Generates `config.yaml` file with `name=MyProject`
+
+$ astro dev init --airflow-version=2.10.5
+# Initializes project with Airflow 2.10.5
+
+$ astro dev init --airflow-version=3.1.3
+# Initializes project with Airflow 3.1.3
+
+$ astro dev init --runtime-version=13.2.0
+# Initializes project with Runtime 13.2.0
+
+$ astro dev init --runtime-version=3.1-5
+# Initializes project with Runtime 3.1-5
+
+$ astro dev init --from-template
+# Initializes project with an interactive template selection menu
+```
+
+</Tab>
+
+<Tab title="APC">
+## Usage
+
+```sh
+astro dev init <project-name>
+```
+
+## Options
+
+| Option                    | Description                                                                                                                                                                            | Possible Values               |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `<project-name>`          | Optional name for your Astro project. Creates and initializes a directory with the specified name.                                                                                     | Any string                    |
+| `-a`, `--airflow-version` | Version of Airflow you want to create an Astro project with. If not specified, latest is assumed. You can change this version in your Dockerfile at any time.                          | String (Airflow version)      |
+| `-v`, `--runtime-version` | Astro Runtime version to use for project initialization.                                                                                                                               | Any supported Runtime version |
+| `-n`, `--name`            | Name for your Astro project.                                                                                                                                                           | Any string                    |
+| `--from-template`         | Specify a getting started [template](https://github.com/astronomer/templates) to use as the base for your Astro project. Opens an interactive menu to select from available templates. | N/A (interactive selection)   |
+
+## Examples
+
+```sh
+$ astro dev init
+# Initializes default project
+
+$ astro dev init my-airflow-project
+# Creates and initializes a directory named 'my-airflow-project'
+
+$ astro dev init --name=MyProject
+# Generates `config.yaml` file with `name=MyProject`
+
+$ astro dev init --airflow-version=2.10.5
+# Initializes project with Airflow 2.10.5
+
+$ astro dev init --airflow-version=3.1.3
+# Initializes project with Airflow 3.1.3
+
+$ astro dev init --runtime-version=13.2.0
+# Initializes project with Runtime 13.2.0 (Airflow 2.x)
+
+$ astro dev init --runtime-version=3.1-5
+# Initializes project with Runtime 3.1-5 (Airflow 3.x)
+
+$ astro dev init --from-template
+# Initializes project with an interactive template selection menu
+```
+
+</Tab>
+</Tabs>
+
+## Related Commands
+
+- [`astro dev restart`](astro-dev-restart)
+- [`astro dev run`](astro-dev-run)
+- [`astro dev logs`](astro-dev-logs)

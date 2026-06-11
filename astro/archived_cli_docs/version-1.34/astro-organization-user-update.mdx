@@ -1,0 +1,39 @@
+---
+title: 'astro organization user update'
+slug: astro-organization-user-update
+description: Update users in your Organization.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info> This command is only available on Astro. </Info>
+
+Update user Organization roles in your current Astro Organization.
+
+## Usage
+
+Run `astro organization user update` to update a user's Organization role. The CLI prompts you for the user email address associated with their account.
+
+## Options
+
+| Option    | Description                                                                                                                                       | Valid Values                                                                                                                             |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `<email>` | Specify the email for the user you want to invite or update. Use only with `astro organization user update` and `astro organization user invite`. | Any valid email                                                                                                                             |
+| `--role`  | The user's role in the Organization. Use only with `astro organization user update` and `astro organization user invite`.                         | Valid values are either `ORGANIZATION_MEMBER`, `ORGANIZATION_BILLING_ADMIN`, or `ORGANIZATION_OWNER`.   The default is `ORGANIZATION_MEMBER` |
+
+## Examples
+
+```sh
+# Invite a user to your Organization
+astro organization user invite user@cosmicenergy.org --role ORGANIZATION_BILLING_ADMIN
+
+# Update a user's role. The CLI prompts you for the user's email
+astro organization user update --role ORGANIZATION_MEMBER
+```
+
+## Related Commands
+
+- [`astro login`](astro-login)
+- [`astro organization user invite`](astro-organization-user-invite)
+- [`astro organization user list`](astro-organization-user-list)

@@ -1,0 +1,43 @@
+---
+title: 'Uninstall the Astro CLI'
+slug: uninstall-cli
+description: "Instructions for uninstalling the Astro command-line interface (CLI)."
+hide-nav-links: true
+hide-feedback: true
+---
+
+You can uninstall the Astro CLI from your machine if you no longer need it or if you want to perform a clean reinstallation of the CLI.
+
+## Uninstall CLI
+
+<Tabs>
+<Tab title="Mac" language="mac">
+To uninstall the Astro CLI on Mac, run:
+
+```sh
+brew uninstall astro
+```
+</Tab>
+<Tab title="Windows with winget" language="windows-winget">
+To uninstall an older version of the Astro CLI, you'll need to follow the [alternate Windows uninstall process](uninstall-cli?tab=windows-manual).
+
+To uninstall the Astro CLI, open Windows PowerShell as an administrator and run the following command:
+
+```sh
+winget uninstall -e --id Astronomer.Astro
+```
+</Tab>
+<Tab title="Windows (Manual)" language="windows-manual">
+To uninstall the Astro CLI on Windows:
+
+1. Delete the filepath for `astro.exe` from your Windows PATH environment variable.
+2. Delete `astro.exe`.
+</Tab>
+<Tab title="Linux" language="linux">
+Run the following command to uninstall the Astro CLI on Linux:
+
+```sh
+sudo rm /usr/local/bin/astro
+```
+</Tab>
+</Tabs>

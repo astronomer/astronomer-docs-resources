@@ -1,0 +1,31 @@
+---
+title: 'astro workspace token add'
+slug: astro-workspace-token-add
+description: Add an Organization API token to your current Workspace.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info> This command is only available on Astro. </Info>
+
+Add an Organization API token to your current Workspace and grant it Workspace permissions.
+
+## Usage
+
+```sh
+astro workspace token add
+```
+
+## Options
+
+| Option            | Description                                                                                                                             | Valid Values  |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `--org-token-name`   | The name of the Organization API token you want to add to your Workspace.                                                                                                      | Any string enclosed in quotations    |
+| `--role` | The Workspace role to grant to the Organization API token. | One of `WORKSPACE_MEMBER`, `WORKSPACE_AUTHOR`, `WORKSPACE_OPERATOR` or `WORKSPACE_OWNER`. |
+
+## Related commands
+
+- [astro workspace token update](astro-workspace-token-update)
+- [astro workspace token rotate](astro-workspace-token-rotate)
+- [astro workspace switch](astro-workspace-switch)
