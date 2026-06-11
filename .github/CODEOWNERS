@@ -1,11 +1,11 @@
-*.md @lzdanski @yanmastin-astro
+*.md @nicoleomeara-astro @yanmastin-astro
 
-/astro/  @lzdanski @yanmastin-astro
+/astro/  @nicoleomeara-astro @yanmastin-astro
 
-/cli/ @lzdanski @yanmastin-astro
+/cli/ @nicoleomeara-astro @yanmastin-astro
 
-/software/ @lzdanski @yanmastin-astro
+/software/ @nicoleomeara-astro @yanmastin-astro
 
-/learn/ @TJaniF @kentdanas @lzdanski @yanmastin-astro
+/learn/ @TJaniF @kentdanas @nicoleomeara-astro @yanmastin-astro
 
 /code-samples/dags/ @TJaniF @kentdanas
