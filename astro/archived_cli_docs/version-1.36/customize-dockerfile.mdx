@@ -1,0 +1,88 @@
+---
+title: 'Customize your Astro project Dockerfile'
+slug: customize-dockerfile
+hide-nav-links: true
+hide-feedback: true
+---
+{/* RUNTIME_VER update for Runtime Release */}
+
+By default, the Astro project Dockerfile only includes a `FROM` statement that specifies your Astro Runtime version. However, you can extend your Dockerfile to use a different distribution or run additional buildtime arguments. Use this document to learn which Dockerfile customizations are supported both locally and on Astro.
+
+## Prerequisites
+
+- An [Astro project](develop-project#create-an-astro-project)
+
+## Use an alternative Astro Runtime distribution
+
+Starting with Astro Runtime 9, each version of Astro Runtime has a separate distribution for each currently supported Python version. Use an alternative Python distribution if any of your dependencies require a Python version other than the [default Runtime Python version](/runtime/runtime-image-architecture#python-versioning).
+
+<Info>Replace `<registry-url>` with the Docker registry URL. Airflow 2.x-based Runtime versions and Airflow 3.x-based Runtime versions have different registry URLs. See [Docker Registry URLs](/runtime/runtime-image-architecture#container-registry-urls) for information on which URL to pull from.</Info>
+
+To use a specific Python distribution, update the first line in your Astro project `Dockerfile` to reference the required distribution:
+
+```text
+FROM <registry-url><runtime-version>-python-<python-version>
+```
+
+For example, to use Python 3.10 with Astro Runtime version 9.0.0, you update the first line of your Dockerfile to the following:
+
+```text
+FROM <registry-url>9.0.0-python-3.10
+```
+
+## Run commands on build
+
+To run additional commands as your Astro project is built into a Docker image, add them to your `Dockerfile` as `RUN` commands. These commands run as the last step in the image build process.
+
+<Info>Replace `<registry-url>` with the Docker registry URL. Airflow 2.x-based Runtime versions and Airflow 3.x-based Runtime versions have different registry URLs. See [Docker Registry URLs](/runtime/runtime-image-architecture#container-registry-urls) for information on which URL to pull from.</Info>
+
+For example, if you want to run `ls` when your image builds, your `Dockerfile` would look like this:
+
+```
+FROM <registry-url>3.1-5
+RUN ls
+```
+
+This is supported both on Astro and in the context of local development.
+
+## Add a CA certificate to an Astro Runtime image
+
+If you need your Astro Deployment to communicate securely with a remote service using a certificate signed by an untrusted or internal certificate authority (CA), you need to add the CA certificate to the trust store inside your Astro project's Docker image.
+
+<Info>Replace `<registry-url>` with the Docker registry URL. Airflow 2.x-based Runtime versions and Airflow 3.x-based Runtime versions have different registry URLs. See [Docker Registry URLs](/runtime/runtime-image-architecture#container-registry-urls) for information on which URL to pull from.</Info>
+
+1. In your Astro project `Dockerfile`, add the CA certificate to the base Runtime image:
+
+    ```docker
+    # Use the base Astro Runtime image so we can setup our CA cert before installing any packages
+    FROM <registry-url><runtime-version>-base
+
+    # Switch to root for setup
+    USER root
+
+    # Add internal CA certificate
+    COPY <internal-ca.crt> /usr/local/share/ca-certificates/<internal-ca.crt>
+    RUN update-ca-certificates
+
+    # Install system packages if listed in packages.txt
+    COPY packages.txt .
+    RUN /usr/local/bin/install-system-packages
+
+    # Install Python dependencies
+    COPY requirements.txt .
+    RUN /usr/local/bin/install-python-dependencies
+
+    # Switch back to astro user
+    USER astro
+
+    # Copy project into image
+    COPY --chown=astro:0 . .
+    ```
+
+
+    <Info>When using a base image, make sure to install the system level and python packages.</Info>
+
+
+2. (Optional) Add additional `COPY` statements before the `RUN update-ca-certificates` stanza for each CA certificate your organization is using for external access.
+
+3. [Restart your local environment](run-airflow-locally#restart-a-local-airflow-environment) or deploy to Astro. See [Deploy code](/astro/deploy-code).

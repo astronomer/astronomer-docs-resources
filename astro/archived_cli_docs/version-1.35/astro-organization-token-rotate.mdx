@@ -1,0 +1,38 @@
+---
+title: 'astro organization token rotate'
+slug: astro-organization-token-rotate
+description: Rotate an Organization API token.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info> This command is only available on Astro. </Info>
+
+Rotate an Organization API token.
+
+## Usage
+
+```sh
+astro organization token rotate <flags>
+```
+
+## Options
+
+| Option            | Description                                                                                                                             | Valid Values  |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `--clean-output`   | Print only the token as output. Use this flag in automated workflows.                                                                                                      | None.   |
+| `--force` | Rotate the token without showing a warning. |  None. |
+| `--name` | The name for the token. | Any string surrounded by quotations. |
+
+## Examples
+
+```sh
+astro organization token rotate --name "My token" --force
+```
+
+## Related commands
+
+- [astro organization token update](astro-organization-token-update)
+- [astro organization token delete](astro-organization-token-delete)
+- [astro organization switch](astro-organization-switch)

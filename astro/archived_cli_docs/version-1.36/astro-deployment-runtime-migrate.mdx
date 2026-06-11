@@ -1,0 +1,30 @@
+---
+title: 'astro deployment runtime migrate'
+slug: astro-deployment-runtime-migrate
+description: Migrate an Astro Private Cloud Deployment to Astro Runtime.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info>This command is available only if you're authenticated to an Astro Private Cloud installation.</Info>
+
+Initializes the Runtime migration upgrade process on any Deployment on Astro Private Cloud.
+
+## Usage
+
+Run `astro deployment runtime migrate --deployment-id=<deployment-id>` to initialize the Runtime upgrade process. To finalize the Runtime upgrade process, complete all of the steps in [Migrate to Astro Runtime](https://www.astronomer.io/astro-private-cloud/v-0-37/migrate-to-runtime).
+
+The Astro CLI lists only the available Runtime versions that are later than the version currently specified in your `Dockerfile`.
+
+## Options
+
+| Option                        | Description                                                                                                                    | Possible values
+| --------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `--cancel` | Cancel the migration                                                                | None |
+| `--deployment-id` (_Required_)           | The ID of the Deployment which you want to migrate to Runtime. To find your Deployment ID, run `astro deployment list`.     | Any Deployment ID |
+
+## Related commands
+
+- [`astro deployment airflow upgrade`](astro-deployment-airflow-upgrade)
+- [`astro deployment runtime upgrade`](astro-deployment-runtime-upgrade)

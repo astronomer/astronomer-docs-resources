@@ -1,0 +1,18 @@
+---
+title: 'Run Airflow locally'
+slug: local-airflow-overview
+description: Work with your Astro project in a local environment by running Airflow and dags locally.
+hide-nav-links: true
+hide-feedback: true
+---
+
+Running Airflow locally with the Astro CLI lets you preview and debug dag changes before deploying to production. In a local Airflow environment, you can fix issues with your dags without consuming infrastructure resources or waiting on code deploy processes.
+
+The Astro CLI uses Podman or Docker to run Airflow components in containers on your local machine. All tasks run locally in the scheduler container using the [local executor](https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/executor/local.html).
+
+See the following documentation to get started:
+
+- [Run Airflow locally](run-airflow-locally)
+- [Test your dags](test-your-astro-project-locally)
+- [Troubleshoot locally](troubleshoot-locally)
+- [Sync Deployment connections from Astro](local-connections)

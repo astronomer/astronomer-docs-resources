@@ -1,0 +1,62 @@
+---
+title: 'astro workspace team update'
+slug: astro-workspace-team-update
+description: Update a Team in a Workspace.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info>The behavior and format of this command differs depending on what Astronomer product you're using. Use the following tabs to change between product contexts.</Info>
+
+Update a Team's permissions in a given Workspace.
+
+<Tabs>
+<Tab title="Astro">
+## Usage
+
+```sh
+astro workspace team update <team-id> --workspace-id <workspace-id> --role=<system-role>
+```
+
+To find a Team ID using the Astro CLI, run `astro workspace team list`.
+
+To find a Team ID in the Astro UI, click **Organization Settings** > **Access Management** > **Teams**. Search for your Team in the **Teams** table and copy its **ID**. The ID should look something like `clk17xqgm124q01hkrgilsr49`.
+
+#### Options
+
+| Option           | Description                                              | Possible Values                                                                                                               |
+| ---------------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `--workspace-id` | The Workspace for the Team. Use to override CLI prompts. | Any valid Workspace ID.                                                                                                       |
+| `<team-id>`      | The ID for the Team. Use to override CLI prompts.        | Any valid Team ID. To retrieve a Team ID, run `astro workspace team list`.                                                    |
+| `--role`         | The Team's role in the Workspace.                        | Possible values are `WORKSPACE_ACCESSOR`,`WORKSPACE_MEMBER`, `WORKSPACE_AUTHOR`, `WORKSPACE_OPERATOR`, and `WORKSPACE_OWNER`. |
+</Tab>
+<Tab title="APC">
+## Usage
+
+```sh
+astro workspace team update <team-id> --workspace-id <workspace-id> --role=<system-role>
+```
+
+To find a Team ID using the Astro CLI, run `astro workspace team list`. You can also access the Team in the UI and copy the last part of the URL in your web browser. For example, if your Team is located at `BASEDOMAIN.astronomer.io/w/cx897fds98csdcsdafasdot8g7/team/cl4iqjamcnmfgigl4852flfgulye`, your Team ID would be `cl4iqjamcnmfgigl4852flfgulye`.
+
+#### Related documentation
+
+- [Import identity provider groups into Astro Private Cloud](https://www.astronomer.io/docs/software/import-idp-groups).
+
+#### Options
+
+| Option                        | Description                       | Possible Values                                                                                                  |
+| ----------------------------- | --------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `--workspace-id` (_Required_) | The Workspace for the Team        | Any valid Workspace ID.                                                                                          |
+| `<team-id>` (_Required_)      | The Team's ID.                    | Any valid Team ID.                                                                                               |
+| `--role`                      | The Team's role in the Workspace. | Possible values are `WORKSPACE_VIEWER`, `WORKSPACE_EDITOR`, or `WORKSPACE_ADMIN`. Default is `WORKSPACE_VIEWER`. |
+
+</Tab>
+</Tabs>
+
+## Related commands
+
+- [`astro workspace team remove`](astro-workspace-team-remove)
+- [`astro organization team create`](astro-organization-team-create)
+- [`astro workspace switch`](astro-workspace-switch)

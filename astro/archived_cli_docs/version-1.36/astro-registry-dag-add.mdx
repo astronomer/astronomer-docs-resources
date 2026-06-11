@@ -1,0 +1,40 @@
+---
+title: 'astro registry dag add'
+slug: astro-registry-dag-add
+description: Download a dag from the Astronomer registry to your project.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info>The behavior and format of this command are the same for both Astro and Astro Private Cloud.</Info>
+
+Download a dag from the [Astronomer Registry](https://registry.astronomer.io/) to your Astro project.
+
+## Usage
+
+```sh
+astro registry dag add
+```
+
+When you run the command, the CLI prompts you for a dag ID to download. To retrieve the dag name, open the dag in the Astronomer registry and copy the URL between `dags/` and `/versions`. For example, in the URL `https://registry.astronomer.io/dags/upload_files_to_s3/versions/1.0.0`, copy `upload_files_to_s3`.
+
+## Options
+
+| Option            | Description                                                                                                                             | Valid Values  |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `<dag-id>`   | The dag ID to download.                                                                                                      | Any valid dag ID. Must be the first option in the command.  |
+| `--version`   | The version of the dag to download.                                                                                                      | Any valid version.   |
+| `--add-providers` | Attempt to add the required providers for the dag to `requirements.txt`. | None. |
+
+## Examples
+
+```sh
+# Download version 1.0.0 of a dag called 'upload_files_to_s3'
+astro registry dag add upload_files_to_s3 --version 1.0.0
+```
+
+## Related commands
+
+- [astro registry provider add](astro-registry-provider-add)
+- [astro dev start](astro-dev-start)

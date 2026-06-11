@@ -1,0 +1,31 @@
+---
+title: 'astro workspace token delete'
+slug: astro-workspace-token-delete
+description: Delete a Workspace API token.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info> This command is only available on Astro. </Info>
+
+Delete a Workspace API token or remove an Organization API token in your current Workspace.
+
+## Usage
+
+```sh
+astro workspace token delete
+```
+
+## Options
+
+| Option            | Description                                                                                                                             | Valid Values  |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `--force`   | Delete or remove the API token without showing a warning.                                                                                                     | None   |
+| `--name` |The name of the token to delete. | Any string surrounded by quotations |
+
+## Related commands
+
+- [astro workspace token update](astro-workspace-token-update)
+- [astro workspace token rotate](astro-workspace-token-rotate)
+- [astro workspace switch](astro-workspace-switch)

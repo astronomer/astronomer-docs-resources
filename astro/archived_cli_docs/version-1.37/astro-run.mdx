@@ -1,0 +1,44 @@
+---
+title: 'astro run'
+slug: astro-run
+description: Reference documentation for astro run.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info>The behavior and format of this command are the same for both Astro and Astro Private Cloud.</Info>
+
+Trigger a single dag run in a local Airflow environment and see task success or failure in your terminal. This command compiles your dag and runs it in a single Airflow worker container based on your Astro project configurations.
+
+For more information, see [Test your Astro project locally](test-your-astro-project-locally).
+
+## Usage
+
+```sh
+astro run <dag-id>
+```
+
+## Options
+
+| Option                  | Description                                                                                                                                 | Possible Values                            |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| `-d`, `--dag-file` | The location of your dag file. When you specify this flag, only the specified dag is parsed by the Astro CLI. All other dags in the project are ignored.| Any valid dag file in your `dags` directory. |
+| `-e`,`--env`            | Path to an alternative environment variable file. The default is `.env` in your current Astro project.                                      | Any valid filepath.                         |
+| `--execution-date`            | The execution date for the dag run.                                      | An execution date formatted as either `YYYY-MM-DD`, `YYYY-MM-DDTHH:MM:SS`. or `YYYY-MM-DD HH:MM:SS`.                        |
+| `--no-cache`            | Build your Astro project into a Docker image without using cache.                                                                           | None.                                       |
+| `-s`, `--settings-file` | An alternative settings file from which Airflow objects are imported. The default is `airflow_settings.yaml` in your current Astro project. | Any valid filepath. |
+
+## Examples
+
+```sh
+# Run a dag with an alternative set of environment variables
+$ astro run example_dag_basic --env dev.env
+```
+
+## Related Commands
+
+- [`astro dev start`](astro-dev-start)
+- [`astro dev restart`](astro-dev-restart)
+- [`astro dev stop`](astro-dev-stop)
+- [`astro deploy`](astro-deploy)

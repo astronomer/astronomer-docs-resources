@@ -1,0 +1,78 @@
+---
+title: 'astro login'
+slug: astro-login
+description: Reference documentation for astro login.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info>The behavior and format of this command differs depending on what Astronomer product you're using. Use the following tabs to change product contexts.</Info>
+
+<Tabs>
+<Tab title="Astro">
+Authenticate to Astro. After you run this command, the CLI prompts you for your login email address. Using the provided email address, the CLI assumes your organization and redirects you to a web browser where you can log in to the Astro UI. After you log in, the CLI automatically recognizes this and authenticates your account.
+
+If you're running the Astro CLI on a headless system or in an environment without browser access (such as a remote server, Docker container, or CI/CD pipeline), use the `--login-link` or `--token-login` flags to authenticate without needing a local browser.
+
+## Usage
+
+```sh
+astro login
+```
+
+## Options
+
+| Option                | Description                                                                                                            | Possible Values |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------- | --------------- |
+| `-l`, `--login-link`  | Force the CLI to print a login URL instead of automatically opening a browser. Copy the URL and open it on any device that has browser access to complete authentication. This is useful for headless environments, remote servers, or SSH sessions where a browser is not available | None            |
+| `-t`, `--token-login` | Authenticate by providing a token directly, without any browser interaction. Generate a token at `cloud.astronomer.io/token` from a device with browser access, then pass it to this flag. This is the recommended approach for fully headless systems and non-interactive environments such as CI/CD pipelines, Docker containers, or automated scripts | A valid authentication token from `cloud.astronomer.io/token` |
+
+## Examples
+
+```sh
+astro login
+# The CLI automatically opens the Astro UI in a web browser, which prompts you to log in.
+
+astro login --login-link
+# The CLI prints a login URL instead of opening a browser.
+# Use this on headless systems or SSH sessions: copy the URL to a device with a browser to authenticate.
+
+astro login --token-login <your-token>
+# Authenticate without any browser interaction.
+# Generate a token at cloud.astronomer.io/token and pass it directly.
+# Recommended for CI/CD pipelines, Docker containers, and other non-interactive environments.
+```
+</Tab>
+<Tab title="APC">
+Authenticate to Astro Private Cloud. After you run this command, the CLI prompts you to either enter a username and password or retrieve an OAuth token from `<basedomain>/token`.
+
+## Usage
+
+```sh
+astro login <basedomain>
+```
+
+## Options
+
+| Option                | Description                                                                              | Possible Values |
+| --------------------- | ---------------------------------------------------------------------------------------- | --------------- |
+| `-l`, `--login-link` | Generate a login link to login on a separate device for cloud CLI login                  | None            |
+| `-o`, `--oauth`       | Skip the prompt for local authentication, proceed directly to OAuth token authentication | None            |
+
+## Examples
+
+```sh
+astro login mycompany.astromomer.io
+# The CLI prompts you for a username and password, or to leave the prompt empty for OAuth authentication
+
+astro login mycompany.astromomer.io -o
+# The CLI does not prompt you for a username and password and instead directly prompts you for an OAuth login token
+```
+</Tab>
+</Tabs>
+
+### Related commands
+
+- [`astro logout`](astro-logout)
+- [`astro deploy`](astro-deploy)

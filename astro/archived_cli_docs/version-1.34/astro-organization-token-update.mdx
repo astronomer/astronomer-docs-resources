@@ -1,0 +1,41 @@
+---
+title: 'astro organization token update'
+slug: astro-organization-token-update
+description: Update an Organization API token.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info> This command is only available on Astro. </Info>
+
+Update an Organization API token.
+
+## Usage
+
+```sh
+astro organization token update <flags>
+```
+
+## Options
+
+| Option            | Description                                                                                                                             | Valid Values  |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `--clean-output`   | Print only the token as output. Use this flag in automated workflows.                                                                                                      | None.   |
+| `--description` | The description for the token. | Any string surrounded by quotations. |
+| `--expiration` | The expiration date for the token. By default there is no expiration date. | Any integer between 1 and 3650, used to represent days. |
+| `--name` | The current name for the token. | Any string surrounded by quotations. |
+| `--new-name` | The updated name for the token. | Any string surrounded by quotations. |
+| `--role`         | The token's role in the Organization.                                      | Possible values are either `ORGANIZATION_MEMBER`, `ORGANIZATION_BILLING_ADMIN`, or `ORGANIZATION_OWNER`. |
+
+## Examples
+
+```sh
+astro organization token update --new-name "My updated API token" --role ORGANIZATION_MEMBER
+```
+
+## Related commands
+
+- [astro organization token rotate](astro-organization-token-rotate)
+- [astro organization token delete](astro-organization-token-delete)
+- [astro organization switch](astro-organization-switch)

@@ -1,0 +1,38 @@
+---
+title: 'astro workspace token rotate'
+slug: astro-workspace-token-rotate
+description: Rotate a Workspace API token.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info> This command is only available on Astro. </Info>
+
+Rotate a Workspace API token in your current Workspace.
+
+## Usage
+
+```sh
+astro workspace token rotate <flags>
+```
+
+## Options
+
+| Option            | Description                                                                                                                             | Valid Values  |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `--clean-output`   | Print only the token as output. Use this flag in automated workflows.                                                                                                      | None   |
+| `--force` | Rotate the token without showing a warning |  None |
+| `--name` | The name for the token. | Any string surrounded by quotations |
+
+## Examples
+
+```sh
+astro workspace token rotate --name "My token" --force
+```
+
+## Related commands
+
+- [astro workspace token update](astro-workspace-token-update)
+- [astro workspace token delete](astro-workspace-token-delete)
+- [astro workspace switch](astro-workspace-switch)

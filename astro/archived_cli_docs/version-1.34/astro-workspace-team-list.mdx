@@ -1,0 +1,69 @@
+---
+title: 'astro workspace team list'
+slug: astro-workspace-team-list
+description: List Teams in a Workspace.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info>The behavior and format of this command differs depending on what Astronomer product you're using. Use the following tabs to change product contexts.</Info>
+
+List all Teams in your current Workspace, as well as their level of user permissions within the Workspace.
+
+<Tabs>
+<Tab title="Astro">
+    ## Usage
+
+```sh
+astro workspace team list
+```
+
+## Output
+
+| Output        | Description                                                      | Data Type                     |
+| ------------- | ---------------------------------------------------------------- | ----------------------------- |
+| `ID`          | The Team ID.                                                     | String                        |
+| `Role`        | The Team's role in the Workspace.                                | String                        |
+| `Name`        | The name of the Team.                                            | String                        |
+| `Description` | The Team description.                                            | String                       |
+| `Create Date` | The date and time that the Team was created in the Organization. | Date (`YYYY-MM-DDTHH:MM:SSZ`) |
+
+## Related commands
+
+- [`astro workspace team add`](astro-workspace-team-add)
+- [`astro organization team create`](astro-organization-team-create)
+- [`astro organization team list`](astro-organization-team-list)
+- [`astro workspace switch`](astro-workspace-switch)
+</Tab>
+<Tab title="APC">
+    ## Usage
+
+```sh
+astro workspace team list <options>
+```
+
+## Options
+
+| Option           | Description                                      | Valid Values           |
+| ---------------- | ------------------------------------------------ | ---------------------- |
+| `<workspace_id>` | The Workspace you want to list Teams for. | Any valid Workspace ID |
+
+## Output
+
+| Output        | Description                                                      | Data Type                     |
+| ------------- | ---------------------------------------------------------------- | ----------------------------- |
+| `ID`          | The Team ID.                                                     | String                        |
+| `Role`        | The Team's role in the Workspace.                                | String                        |
+| `Name`        | The name of the Team.                                            | String                        |
+| `Description` | The Team description.                                            | Boolean                       |
+| `Create Date` | The date and time that the Team was created in the Organization. | Date (`YYYY-MM-DDTHH:MM:SSZ`) |
+
+## Related commands
+
+- [`astro workspace team add`](astro-workspace-team-add)
+- [`astro organization team create`](astro-organization-team-create)
+- [`astro organization team list`](astro-organization-team-list)
+- [`astro workspace switch`](astro-workspace-switch)
+</Tab>
+</Tabs>

@@ -1,0 +1,59 @@
+---
+title: 'astro organization audit-logs'
+slug: astro-organization-audit-logs
+description: Reference documentation for the astro organization audit-logs command.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info>This command is only available on Astro.</Info>
+
+Astro audit logs record administrative activities and events in your Organization. You can use the audit logs to determine who did what, where, and when. This command allows you to export audit logs in a GZIP format for your entire Organization.
+
+See [Export Astro audit logs](/astro/audit-logs) for more information about exporting audit logs as well as a reference describing the different included fields.
+
+## Usage
+
+```bash
+astro organization audit-logs <options>
+```
+
+Or
+
+```bash
+astro organization al <options>
+```
+
+## Options
+
+| Option   | Description                                                                          | Valid Values |
+| -------- | ------------------------------------------------------------------------------------ | ------------ |
+| `export` | Export your Organization audit logs in GZIP. Requires Organization Owner permissions. | N/A          |
+
+## `export` flags
+
+| Flag | Description | Valid Values |
+| ---- | ----------- | ------------ |
+| `-i`, `--include` | Number of days in the past to start exporting logs from. Minimum: 1. Maximum: 90. Default is `1`. | An integer between `1` and `90`. |
+| `-n`, `--organization-name` | The name of the Organization to export audit logs for. | Any valid Organization name. |
+| `-o`, `--output-file` | Path to a file for storing exported audit logs. | Any valid file path. |
+
+## Examples
+
+Export audit logs for your Organization:
+
+```bash
+astro organization audit-logs export --organization-name="<your-organization-name>"
+```
+
+Export the last 30 days of audit logs to a file:
+
+```bash
+astro organization audit-logs export --include 30 --output-file audit-logs.gz
+```
+
+## Related commands
+
+- [`astro organization list`](astro-organization-list)
+- [`astro organization role list`](astro-organization-role-list)

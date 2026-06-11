@@ -1,0 +1,175 @@
+---
+title: Authenticate Astro to GCP
+description: Instructions for authenticating your Astro project to GCP.
+slug: authenticate-to-gcp
+hide-nav-links: true
+hide-page-feedback: true
+---
+
+#### Prerequisites
+
+- A user account on GCP with access to GCP cloud resources.
+- The [Google Cloud SDK](https://cloud.google.com/sdk/docs/install-sdk).
+- The [Astro CLI](overview).
+- An [Astro project](develop-project#create-an-astro-project).
+- Optional. Access to a secrets backend hosted on GCP, such as GCP Secret Manager.
+
+#### Retrieve GCP user credentials locally
+
+Run the following command to obtain your user credentials locally:
+
+```sh
+gcloud auth application-default login
+```
+
+The SDK provides a link to a webpage where you can log in to your Google Cloud account. After you complete your login, the SDK stores your user credentials in a file named `application_default_credentials.json`.
+
+The location of this file depends on your operating system:
+
+- Linux: `$HOME/.config/gcloud/application_default_credentials.json`
+- Mac: `/Users/<username>/.config/gcloud/application_default_credentials.json`
+- Windows: `%APPDATA%/gcloud/application_default_credentials.json`
+
+#### Configure your Astro project
+
+<Info>For Airflow 3, use the provided `docker-compose.override.yml`. For Airflow 2, replace `api-server` with `webserver` and remove the `dag-processor` block.</Info>
+
+The Astro CLI runs Airflow in a Docker-based environment. To give Airflow access to your credential file, mount it as a Docker volume.
+
+1. In your Astro project, create a file named `docker-compose.override.yml` to your project with the following configuration:
+
+<Tabs>
+<Tab title="Mac">
+
+```yaml
+version: "3.1"
+services:
+  scheduler:
+    volumes:
+      - /Users/<username>/.config/gcloud/application_default_credentials.json:/usr/local/airflow/gcloud/application_default_credentials.json:rw
+  api-server:
+    volumes:
+      - /Users/<username>/.config/gcloud/application_default_credentials.json:/usr/local/airflow/gcloud/application_default_credentials.json:rw
+  triggerer:
+    volumes:
+      - /Users/<username>/.config/gcloud/application_default_credentials.json:/usr/local/airflow/gcloud/application_default_credentials.json:rw
+  dag-processor:
+    volumes:
+      - /Users/<username>/.config/gcloud/application_default_credentials.json:/usr/local/airflow/gcloud/application_default_credentials.json:rw
+```
+
+</Tab>
+<Tab title="Linux">
+
+```yaml
+version: "3.1"
+services:
+  scheduler:
+    volumes:
+      - /home/<username>/.config/gcloud/application_default_credentials.json:/usr/local/airflow/gcloud/application_default_credentials.json:rw
+  api-server:
+    volumes:
+      - /home/<username>/.config/gcloud/application_default_credentials.json:/usr/local/airflow/gcloud/application_default_credentials.json:rw
+  triggerer:
+    volumes:
+      - /home/<username>/.config/gcloud/application_default_credentials.json:/usr/local/airflow/gcloud/application_default_credentials.json:rw
+  dag-processor:
+    volumes:
+      - /home/<username>/.config/gcloud/application_default_credentials.json:/usr/local/airflow/gcloud/application_default_credentials.json:rw
+```
+
+</Tab>
+<Tab title="Windows">
+
+```yaml
+version: "3.1"
+services:
+  scheduler:
+    volumes:
+      - /c/Users/<username>/AppData/Roaming/gcloud/application_default_credentials.json:/usr/local/airflow/gcloud/application_default_credentials.json:rw
+  api-server:
+    volumes:
+      - /c/Users/<username>/AppData/Roaming/gcloud/application_default_credentials.json:/usr/local/airflow/gcloud/application_default_credentials.json:rw
+  triggerer:
+    volumes:
+      - /c/Users/<username>/AppData/Roaming/gcloud/application_default_credentials.json:/usr/local/airflow/gcloud/application_default_credentials.json:rw
+  dag-processor:
+    volumes:
+      - /c/Users/<username>/AppData/Roaming/gcloud/application_default_credentials.json:/usr/local/airflow/gcloud/application_default_credentials.json:rw
+```
+
+</Tab>
+</Tabs>
+
+2. In your Astro project's `.env` file, add the following environment variable. Ensure that this volume path is the same as the one you configured in `docker-compose.override.yml`.
+
+```text
+GOOGLE_APPLICATION_CREDENTIALS=/usr/local/airflow/gcloud/application_default_credentials.json
+```
+
+When you run Airflow locally, all GCP connections without defined credentials automatically fall back to your user credentials when connecting to GCP. Airflow applies and overrides user credentials for GCP connections in the following order:
+
+- Mounted user credentials in the `/~/gcloud/` folder
+- Configurations in `gcp_keyfile_dict`
+- An explicit username & password provided in the connection
+
+For example, if you completed the configuration in this document and then created a new GCP connection with its own username and password, Airflow would use those credentials instead of the credentials in `~/gcloud/application_default_credentials.json`.
+
+## Test your credentials with a secrets backend
+
+Now that Airflow has access to your user credentials, you can use them to connect to your cloud services. Use the following example setup to test your credentials by pulling values from different secrets backends.
+
+1. Create a secret for an Airflow variable or connection in GCP Secret Manager. You can do this using the Google Cloud Console or the gcloud CLI. All Airflow variables and connection keys must be prefixed with the following strings respectively:
+
+    - `airflow-variables-<my_variable_name>`
+    - `airflow-connections-<my_connection_name>`
+
+     For example when adding the secret variable `my_secret_var` you will need to give the secret the name `airflow-variables-my_secret_var`.
+
+2. Add the following environment variables to your Astro project `.env` file. For additional configuration options, see the [Apache Airflow documentation](https://airflow.apache.org/docs/apache-airflow-providers-google/stable/secrets-backends/google-cloud-secret-manager-backend.html). Make sure to specify your `project_id`.
+
+    ```text
+    AIRFLOW__SECRETS__BACKEND=airflow.providers.google.cloud.secrets.secret_manager.CloudSecretManagerBackend
+    AIRFLOW__SECRETS__BACKEND_KWARGS={"connections_prefix": "airflow-connections", "variables_prefix": "airflow-variables", "project_id": "<my-project-id>"}
+    ```
+
+3. Run the following command to start Airflow locally:
+
+    ```sh
+    astro dev start
+    ```
+
+4. Access the Airflow UI at `localhost:8080` and create an Airflow GCP connection named `gcp_standard` with no credentials. See [Connections](https://www.astronomer.io/docs/learn/connections).
+
+   When you use this connection in your dag, it will fall back to using your configured user credentials.
+
+5. Add a dag  which uses the secrets backend to your Astro project `dags` directory. You can use the following example dag to retrieve `<my_variable_name>` and `<my_connection_id>` from the secrets backend and print it to the terminal:
+
+    ```python
+    from airflow.models.dag import DAG
+    from airflow.hooks.base import BaseHook
+    from airflow.models import Variable
+    from airflow.decorators import task
+    from datetime import datetime
+
+    with DAG(
+        'example_secrets_dag',
+        start_date=datetime(2022, 1, 1),
+        schedule=None
+    ):
+
+        @task
+        def print_var():
+            my_var = Variable.get("<my_variable_name>")
+            print(f"My secret variable is: {my_var}")
+
+            conn = BaseHook.get_connection(conn_id="<my_connection_name>")
+            print(f"My secret connection is: {conn.get_uri()}")
+
+        print_var()
+    ```
+
+6. In the Airflow UI, unpause your dag and click **Play** to trigger a dag run.
+7. View logs for your dag run. If the connection was successful, your masked secrets appear in your logs. See [Airflow logging](https://www.astronomer.io/docs/learn/logging).
+
+![Secrets in logs](../../assets/docs/secret_logs.png)

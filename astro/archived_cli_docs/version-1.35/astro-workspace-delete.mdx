@@ -1,0 +1,25 @@
+---
+title: 'astro workspace delete'
+slug: astro-workspace-delete
+description: Delete an Astro Workspace.
+hide-toc: true
+hide-nav-links: true
+hide-feedback: true
+---
+
+<Info>The behavior and format of this command are the same for both Astro and Astro Private Cloud.</Info>
+
+Delete an Astro Workspace.
+
+## Usage
+
+```sh
+astro workspace delete <workspace-id>
+```
+
+You can find a Workspace's ID by running `astro workspace list`. Alternatively, in Astro, you can find a Workspace ID by opening the Workspace and going to **Workspace Settings** > **General** in the Astro UI. If you don't provide a Workspace ID, the CLI prompts you to pick from a list of Workspaces that you belong to in your current Organization.
+
+## Related commands
+
+- [`astro workspace update`](astro-workspace-update)
+- [`astro deployment delete`](astro-deployment-delete)

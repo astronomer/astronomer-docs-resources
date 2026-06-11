@@ -1,0 +1,45 @@
+---
+title: 'Switch between Podman and Docker'
+slug: switch-container-management
+description: "Instructions for switching between Podman and Docker as the container management engine for the Astro CLI."
+hide-nav-links: true
+hide-feedback: true
+---
+
+The Astro CLI automatically runs Podman containers whenever you run a command that requires them. You can switch between Podman and Docker as your container management engine to run Astro CLI commands.
+
+## Prerequisites
+
+<Tabs>
+<Tab title="Docker">
+- Microsoft Hyper-V enabled. See [Install Hyper-V On Windows](https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v) or [Step-By-Step: Enabling Hyper-V on Windows 11](https://techcommunity.microsoft.com/t5/educator-developer-blog/step-by-step-enabling-hyper-v-for-use-on-windows-11/ba-p/3745905).
+- The latest version of the Windows [App Installer](https://apps.microsoft.com/store/detail/app-installer/9NBLGGH4NNS1?hl=en-ca&gl=ca).
+- Windows 10 1709 (build 16299) or later or Windows 11.
+</Tab>
+<Tab title="Podman">
+- Windows Subsystem for Linux (WSL) 2 enabled: See [Enable the Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install), [WSL basic commands](https://learn.microsoft.com/en-us/windows/wsl/basic-commands), and [Troubleshooting WSL 2](https://learn.microsoft.com/en-us/windows/wsl/troubleshooting#error-0x80370102-the-virtual-machine-could-not-be-started-because-a-required-feature-is-not-installed).
+   - After you enable WSL, run:
+    ```
+     wsl --update
+     wsl --install --no-distribution
+    ```
+- Windows 10 or Windows 11.
+- A container service like [Podman](https://podman.io/docs/installation) or [Docker Engine](https://docs.docker.com/engine/install/).
+</Tab>
+</Tabs>
+
+## Switch between Podman and Docker
+
+To run CLI commands in Docker containers, run the following command:
+
+```sh
+astro config set container.binary docker -g
+```
+
+If you need to switch back to using Podman again, run the following command:
+
+```sh
+astro config set container.binary podman -g
+```
+
+<Tip>If you want to switch between Docker and Podman on a specific project without changing the global configuration, run these commands without the `-g`.</Tip>
