@@ -428,7 +428,7 @@
             },
             "editorMode": "code",
             "exemplar": false,
-            "expr": "count(airflow_dagrun_duration{namespace=\"$deployment\"})",
+            "expr": "max(floor(increase(airflow_dagrun_duration_milliseconds_count{namespace=\"$deployment\"}[$__range])))",
             "format": "time_series",
             "hide": false,
             "interval": "",
@@ -442,7 +442,7 @@
               "uid": "${DS_GRAFANACLOUD-PROM}"
             },
             "exemplar": false,
-            "expr": "count(airflow_dagrun_failed{namespace=\"$deployment\"})",
+            "expr": "max(floor(increase(airflow_dagrun_failed_milliseconds_count{namespace=\"$deployment\"}[$__range])))",
             "hide": false,
             "interval": "",
             "legendFormat": "Failed",
@@ -642,7 +642,7 @@
               "uid": "${DS_GRAFANACLOUD-PROM}"
             },
             "exemplar": false,
-            "expr": "count(airflow_dagrun_duration{namespace=\"$deployment\"}) or on ()vector(0)",
+            "expr": "max(round(increase(airflow_dagrun_duration_milliseconds_count{namespace=\"$deployment\"}[1h]))) or on ()vector(0)",
             "format": "time_series",
             "hide": false,
             "interval": "",
@@ -655,7 +655,7 @@
               "uid": "${DS_GRAFANACLOUD-PROM}"
             },
             "exemplar": false,
-            "expr": "count(airflow_dagrun_failed{namespace=\"$deployment\"}) or on ()vector(0)",
+            "expr": "max(round(increase(airflow_dagrun_failed_milliseconds_count{namespace=\"$deployment\"}[1h]))) or on ()vector(0)",
             "hide": false,
             "interval": "",
             "legendFormat": "Failed per/hour",
